@@ -7,6 +7,7 @@ Node version:
 Global installed npm packages:
 - npm install -g @angular/cli@1.2.1
 
+Test your setting by running `ng --version`
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.1.
 
