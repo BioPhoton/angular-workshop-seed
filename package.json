@@ -9,6 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "coverage": "ng test --progress=false --watch=false --code-coverage",
     "bundle-report": "ng build -prod --stats-json && webpack-bundle-analyzer dist/stats.json",
     "extract": "ng xi18n --output-path src/locale",
     "serve:de:aot": "ng serve -prod --locale de --i18n-format xlf --i18n-file src/locale/messages.de.xlf",
