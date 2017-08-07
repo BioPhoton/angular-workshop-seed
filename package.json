@@ -32,6 +32,7 @@
     "@angular/router": "^4.0.0",
     "@ngrx/effects": "^4.0.1",
     "@ngrx/store": "^4.0.0",
+    "@ngrx/store-devtools": "^4.0.0",
     "@ngx-translate/core": "^7.0.0",
     "@ngx-translate/http-loader": "^0.1.0",
     "angular-oauth2-oidc": "^1.0.20",
