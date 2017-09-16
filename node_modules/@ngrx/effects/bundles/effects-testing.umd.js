@@ -9,9 +9,9 @@ function provideMockActions(factoryOrSource) {
         provide: _ngrx_effects.Actions,
         useFactory: function () {
             if (typeof factoryOrSource === 'function') {
-                return rxjs_observable_defer.defer(factoryOrSource);
+                return new _ngrx_effects.Actions(rxjs_observable_defer.defer(factoryOrSource));
             }
-            return factoryOrSource;
+            return new _ngrx_effects.Actions(factoryOrSource);
         },
     };
 }

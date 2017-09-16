@@ -6,9 +6,9 @@ function provideMockActions(factoryOrSource) {
         provide: Actions,
         useFactory: () => {
             if (typeof factoryOrSource === 'function') {
-                return defer(factoryOrSource);
+                return new Actions(defer(factoryOrSource));
             }
-            return factoryOrSource;
+            return new Actions(factoryOrSource);
         },
     };
 }

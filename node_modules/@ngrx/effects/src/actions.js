@@ -24,6 +24,7 @@ export class Actions extends Observable {
         return observable;
     }
     /**
+     * @template V2
      * @param {...?} allowedTypes
      * @return {?}
      */

@@ -3,6 +3,7 @@ import { mergeMap } from 'rxjs/operator/mergeMap';
 import { exhaustMap } from 'rxjs/operator/exhaustMap';
 import { map } from 'rxjs/operator/map';
 import { dematerialize } from 'rxjs/operator/dematerialize';
+import { filter } from 'rxjs/operator/filter';
 import { Subject } from 'rxjs/Subject';
 import { Injectable } from '@angular/core';
 import { verifyOutput } from './effect_notification';
@@ -28,10 +29,10 @@ export class EffectSources extends Subject {
      * @return {?}
      */
     toActions() {
-        return mergeMap.call(groupBy.call(this, getSourceForInstance), (source$) => dematerialize.call(map.call(exhaustMap.call(source$, resolveEffectSource), (output) => {
+        return mergeMap.call(groupBy.call(this, getSourceForInstance), (source$) => dematerialize.call(filter.call(map.call(exhaustMap.call(source$, resolveEffectSource), (output) => {
             verifyOutput(output, this.errorReporter);
             return output.notification;
-        })));
+        }), (notification) => notification.kind === 'N')));
     }
 }
 EffectSources.decorators = [

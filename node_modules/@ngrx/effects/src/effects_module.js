@@ -45,7 +45,7 @@ export class EffectsModule {
                 },
                 {
                     provide: CONSOLE,
-                    useValue: console,
+                    useFactory: getConsole,
                 },
             ],
         };
@@ -73,5 +73,11 @@ function EffectsModule_tsickle_Closure_declarations() {
  */
 export function createSourceInstances(...instances) {
     return instances;
+}
+/**
+ * @return {?}
+ */
+export function getConsole() {
+    return console;
 }
 //# sourceMappingURL=effects_module.js.map

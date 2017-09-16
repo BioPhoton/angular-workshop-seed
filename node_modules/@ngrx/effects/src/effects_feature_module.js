@@ -1,12 +1,14 @@
-import { NgModule, Inject } from '@angular/core';
+import { NgModule, Inject, Optional } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
 import { EffectsRootModule } from './effects_root_module';
 import { FEATURE_EFFECTS } from './tokens';
 export class EffectsFeatureModule {
     /**
      * @param {?} root
      * @param {?} effectSourceGroups
+     * @param {?} storeModule
      */
-    constructor(root, effectSourceGroups) {
+    constructor(root, effectSourceGroups, storeModule) {
         this.root = root;
         effectSourceGroups.forEach(group => group.forEach(effectSourceInstance => root.addEffects(effectSourceInstance)));
     }
@@ -20,6 +22,7 @@ EffectsFeatureModule.decorators = [
 EffectsFeatureModule.ctorParameters = () => [
     { type: EffectsRootModule, },
     { type: Array, decorators: [{ type: Inject, args: [FEATURE_EFFECTS,] },] },
+    { type: StoreModule, decorators: [{ type: Optional },] },
 ];
 function EffectsFeatureModule_tsickle_Closure_declarations() {
     /** @type {?} */

@@ -1,4 +1,5 @@
-import { NgModule, Inject } from '@angular/core';
+import { NgModule, Inject, Optional } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
 import { EffectsRunner } from './effects_runner';
 import { EffectSources } from './effect_sources';
 import { ROOT_EFFECTS } from './tokens';
@@ -7,8 +8,9 @@ export class EffectsRootModule {
      * @param {?} sources
      * @param {?} runner
      * @param {?} rootEffects
+     * @param {?} storeModule
      */
-    constructor(sources, runner, rootEffects) {
+    constructor(sources, runner, rootEffects, storeModule) {
         this.sources = sources;
         runner.start();
         rootEffects.forEach(effectSourceInstance => sources.addEffects(effectSourceInstance));
@@ -31,6 +33,7 @@ EffectsRootModule.ctorParameters = () => [
     { type: EffectSources, },
     { type: EffectsRunner, },
     { type: Array, decorators: [{ type: Inject, args: [ROOT_EFFECTS,] },] },
+    { type: StoreModule, decorators: [{ type: Optional },] },
 ];
 function EffectsRootModule_tsickle_Closure_declarations() {
     /** @type {?} */
