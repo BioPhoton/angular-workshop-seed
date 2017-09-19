@@ -34,6 +34,22 @@ function getBrowserConfig(wco) {
             }
         }));
     }
+    if (buildOptions.sourcemaps) {
+        extraPlugins.push(new webpack.SourceMapDevToolPlugin({
+            filename: '[file].map[query]',
+            moduleFilenameTemplate: '[resource-path]',
+            fallbackModuleFilenameTemplate: '[resource-path]?[hash]',
+            sourceRoot: 'webpack:///'
+        }));
+    }
+    if (buildOptions.commonChunk) {
+        extraPlugins.push(new webpack.optimize.CommonsChunkPlugin({
+            name: 'main',
+            async: 'common',
+            children: true,
+            minChunks: 2
+        }));
+    }
     return {
         plugins: [
             new HtmlWebpackPlugin({
@@ -50,11 +66,6 @@ function getBrowserConfig(wco) {
             }),
             new base_href_webpack_1.BaseHrefWebpackPlugin({
                 baseHref: buildOptions.baseHref
-            }),
-            new webpack.optimize.CommonsChunkPlugin({
-                async: 'common',
-                children: true,
-                minChunks: 2
             }),
             new webpack.optimize.CommonsChunkPlugin({
                 minChunks: Infinity,

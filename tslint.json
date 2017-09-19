@@ -81,11 +81,12 @@
     ],
     "prefer-const": true,
     "quotemark": [
-      false,
+      true,
       "single"
     ],
     "radix": true,
     "semicolon": [
+      false,
       "always"
     ],
     "triple-equals": [
@@ -114,13 +115,15 @@
       "check-type"
     ],
     "directive-selector": [
-      false,
+      true,
       "attribute",
+      "app",
       "camelCase"
     ],
     "component-selector": [
-      false,
+      true,
       "element",
+      "app",
       "kebab-case"
     ],
     "use-input-property-decorator": true,
