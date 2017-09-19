@@ -1,3 +1,43 @@
-<div class="container">
-  <app-home></app-home>
+<div id="main-container" class="container-fluid">
+
+  <nav id="main-menu" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#">MyFlights</a>
+    <button class="navbar-toggler d-lg-none"
+      type="button"
+      data-toggle="collapse"
+      data-target="#mainNavbar"
+      aria-controls="mainNavbar"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      (click)="toggleNav()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class=" navbar-collapse" id="mainNavbar"
+      [ngClass]="{collapse:navBarCollapsed}">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link"
+            (click)="toggleNav(true)">Home</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link"
+            (click)="toggleNav(true)">Flight</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div id="main-content" class="row">
+    <aside id="sidebar" class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+      <nav id="side-nav">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+      </nav>
+    </aside>
+    <main id="main-" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+      <app-flight-search></app-flight-search>
+    </main>
+  </div>
+
 </div>

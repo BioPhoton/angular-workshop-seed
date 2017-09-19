@@ -1,0 +1,79 @@
+<h1>
+  Flight Search
+</h1>
+
+<div class="row grow">
+
+  <div class="col">
+
+    <div class="card">
+      <div class="card-body">
+
+        <div class="form-group row">
+          <label for="from" class="col-2 col-form-label">From:</label>
+          <div class="col-10">
+            <input id="from" class="form-control" type="text">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="to" class="col-2 col-form-label">To:</label>
+          <div class="col-10">
+            <input id="to" class="form-control" type="text">
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer bg-white">
+        <button class="btn btn-outline-secondary">
+          Search
+        </button>
+      </div>
+
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <div class="card-header">
+        Basket
+      </div>
+      <div class="card-body">
+        {{selectedFlightIds | json}}
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-secondary">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br/>
+<div class="row">
+
+  <div class="col">
+    <h2>
+      Verfügbare Flüge
+    </h2>
+    <br/>
+    <table class="table table-condensed">
+      <tr>
+        <th>Id</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Date</th>
+        <th colspan="2">
+        </th>
+      </tr>
+      <tr>
+        <td>Id</td>
+        <td>From</td>
+        <td>To</td>
+        <td>Date</td>
+        <td>
+          <a class="btn btn-outline-secondary btn-default">Select</a>
+        </td>
+      </tr>
+    </table>
+
+  </div>
+</div>
