@@ -5,11 +5,11 @@ Node version:
 - 6.11.1 or higher
 
 Global installed npm packages:
-- npm install -g @angular/cli@1.4.2
+- npm install -g @angular/cli@1.4.5
 
 Test your setting by running `ng --version`
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.2.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.5.
 
 Eventuell `npm rebuild node-sass --force` ausführen
 
