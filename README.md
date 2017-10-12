@@ -11,7 +11,7 @@ Test your setting by running `ng --version`
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.5.
 
-Eventuell `npm rebuild node-sass --force` ausführen
+Maybe run `npm rebuild node-sass --force` if there are problems with node-sass
 
 ## Development server
 
