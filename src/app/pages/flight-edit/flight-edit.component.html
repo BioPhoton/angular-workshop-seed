@@ -1,0 +1,95 @@
+<h1>Flight {{flight$ | async | json}}</h1>
+
+<pre>
+  {{flight$ | async | json}}
+</pre>
+
+
+<form [formGroup]="editForm" (submit)="submitForm()">
+
+  editForm.value: {{editForm.value | json}}<br>
+  editForm.valid: {{editForm.valid}}<br>
+  editForm.errors: {{editForm.errors | json}}<br>
+  <small class="text-danger" *ngIf="editForm.hasError('controlsDifferent')">
+    The controls have to be different!!
+  </small>
+
+  <input type="text" [formControlName]="'id'"><br>
+  <small class="text-danger" *ngIf="displayError('id', 'required')">
+    {{getErrorRequiredMessage()}}
+  </small>
+
+  id.value: {{editForm.controls['id'].value}}<br>
+  id.valid: {{editForm.controls['id'].valid}}<br>
+  id.errors: {{editForm.controls['id'].errors | json}}<br>
+
+  <div [ngClass]="{'test':editForm.get('to').invalid}">
+    <input type="text" [formControlName]="'from'"><br>
+    <small class="text-danger" *ngIf="displayError('from', 'required')">
+      {{getErrorRequiredMessage()}}
+    </small>
+    <small class="text-danger" *ngIf="displayError('from', 'minlength')">
+      {{getErrorMinLengthMessage('from')}}
+    </small>
+    <app-form-control-state [control]="editForm.get('from')">
+      <h2>From</h2>
+    </app-form-control-state>
+    <input type="text" [formControlName]="'to'"><br>
+    to.errors: {{editForm.controls['to'].errors | json}}<br>
+    <small class="text-danger" *ngIf="displayError('to', 'cityValid')">
+      City is invalid
+    </small>
+
+    <app-form-control-state [control]="editForm.get('to')">
+      <h2>To</h2>
+    </app-form-control-state>
+  </div>
+
+
+
+
+  <input formControlName="date">
+
+  <app-form-control-state [control]="editForm.get('date')">
+    <h2 i18n>Date</h2>
+  </app-form-control-state>
+
+
+  <button>SUBMIT</button>
+  <button type="button">SUBMIT button</button>
+  <button type="submit">SUBMIT submit</button>
+  <button type="reset">Reset natively</button>
+  <button type="button" (click)="resetFormWithVal()">Reset Value</button>
+  <button type="button" (click)="resetForm()">Reset empty</button>
+
+</form>
+
+<select multiple name="select1"
+  [ngModel]="editForm.get('select1').value"
+  (ngModel)="editForm.get('select1').setValue($event)">
+  <option
+    *ngFor="let opt of selectOption">
+    {{opt.label}}
+  </option>
+</select>
+select1: {{editForm.get('select1').valueChanges | async}}<br>
+
+
+from.value: {{editForm.controls['from'].value}}<br>
+from.valid: {{editForm.controls['from'].valid}}<br>
+from.errors: {{editForm.controls['from'].errors | json}}<br>
+
+
+<form [formGroup]="editForm">
+  <div class="form-group">
+    <label for="id">Id</label>
+    <input type="text" class="form-control" id="id" aria-describedby="idHelp"
+      placeholder="Flight id"
+      formControlName="id">
+    <small id="idHelp" class="form-text text-muted">We'll never share your email
+      with anyone else.
+    </small>
+  </div>
+</form>
+
+

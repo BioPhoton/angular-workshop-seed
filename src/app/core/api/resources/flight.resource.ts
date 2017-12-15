@@ -1,20 +1,23 @@
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http'
-import {Injectable} from '@angular/core'
-import {Observable} from 'rxjs/Rx'
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 
-import 'rxjs/Rx'
+import {environment} from '../../../../environments/environment';
+import {Flight} from '../models/Flight';
+import {IFlightResource} from './flight-resource.interface';
+import {Observable} from 'rxjs/Observable';
 
-import {environment} from '../../../../environments/environment'
-import {Flight} from '../models/Flight'
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/share';
+
 
 @Injectable()
-export class FlightResource {
+export class FlightResource implements IFlightResource {
 
-  private baseUrl: string
-  private resourceName = 'flight'
+  baseUrl: string;
+  resourceName = 'flight';
 
   constructor(private http: HttpClient) {
-    this.baseUrl = [environment.baseUrl, this.resourceName].join('/')
+    this.baseUrl = [environment.baseUrl, this.resourceName].join('/');
   }
 
   findById(id: string): Observable<Flight> {

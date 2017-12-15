@@ -18,11 +18,23 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link"
+            routerLink="home"
             (click)="toggleNav(true)">Home</a>
         </li>
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link"
+            [routerLink]="['flight-search']"
             (click)="toggleNav(true)">Flight</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link"
+            [routerLink]="['test']"
+            (click)="toggleNav(true)">Test</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link"
+            [routerLink]="['passenger']"
+            (click)="toggleNav(true)">Passenger</a>
         </li>
       </ul>
     </div>
@@ -36,7 +48,7 @@
       </nav>
     </aside>
     <main id="main-" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-      <app-flight-search></app-flight-search>
+      <router-outlet></router-outlet>
     </main>
   </div>
 

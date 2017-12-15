@@ -12,39 +12,38 @@
         <div class="form-group row">
           <label for="from" class="col-2 col-form-label">From:</label>
           <div class="col-10">
-            <input id="from" class="form-control" type="text">
+            <input id="from" class="form-control" type="text" [ngModel]="from" (ngModelChange)="from = $event">
+            from: {{from}}
           </div>
         </div>
 
         <div class="form-group row">
           <label for="to" class="col-2 col-form-label">To:</label>
           <div class="col-10">
-            <input id="to" class="form-control" type="text">
+            <input id="to" class="form-control" type="text" [(ngModel)]="to">
+            to: {{to}}
           </div>
         </div>
       </div>
 
       <div class="card-footer bg-white">
-        <button class="btn btn-outline-secondary">
+        <button
+          class="btn btn-outline-secondary"
+          [disabled]="!from || !to"
+
+          (click)="searchFlights(from, to)">
           Search
         </button>
       </div>
 
     </div>
   </div>
-  <div class="col">
-    <div class="card">
-      <div class="card-header">
-        Basket
-      </div>
-      <div class="card-body">
-        {{selectedFlightIds | json}}
-      </div>
-      <div class="card-footer">
-        <button class="btn btn-secondary">Delete</button>
-      </div>
-    </div>
-  </div>
+  <app-flight-basket
+    class="col"
+    [selectedFlightIds]="selectedFlightIds">
+    <h2>Basket</h2>
+    <button class="btn" (click)="deleteBasket()">Delete</button>
+  </app-flight-basket>
 </div>
 
 <br/>
@@ -52,7 +51,8 @@
 
   <div class="col">
     <h2>
-      Verfügbare Flüge
+      Available Flights
+      <button (click)="selectAll()">Select All</button>
     </h2>
     <br/>
     <table class="table table-condensed">
@@ -64,14 +64,34 @@
         <th colspan="2">
         </th>
       </tr>
-      <tr>
-        <td>Id</td>
-        <td>From</td>
-        <td>To</td>
-        <td>Date</td>
+
+      <app-flight-card
+        *ngFor="let f of flights"
+        [flight]="f"
+        [selected]="selectedFlightIds[f.id]"
+        (selectedChange)="selectFlight($event)"
+        appHighlight="blue">
+      </app-flight-card>
+
+      <tr *ngFor="let f of flights"
+          [class.table-warning]="selectedFlightIds[f.id]"
+          class="something table-warning">
+        <!--
+        class="something {{selectedFlightIds[f.id]?'table-warning':''}}"
+        [ngClass]="getClassNames()"
+        [class.table-warning]="selectedFlightIds[f.id]"
+        [class.table-danger]="selectedFlightIds[f.id]"
+        -->
+        <td>{{f.id}}</td>
+        <td>{{f.from}}</td>
+        <td>{{f.to}}</td>
+        <td>{{f.date | date:'dd.MM.yyyy'}}</td>
         <td>
-          <a class="btn btn-outline-secondary btn-default">Select</a>
+          <a class="btn btn-outline-secondary btn-default" (click)="selectFlight(f.id)">
+            {{!selectedFlightIds[f.id]?'Select':'Deselect'}}
+          </a>
         </td>
+
       </tr>
     </table>
 

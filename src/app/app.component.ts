@@ -1,15 +1,15 @@
-import {Component} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
 export class AppComponent {
+
   navBarCollapsed = true;
 
   constructor() {
   }
-
 
   toggleNav(closeOnly?: boolean) {
     if (closeOnly) {
