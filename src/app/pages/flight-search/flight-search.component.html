@@ -1,99 +1,111 @@
-<h1>
-  Flight Search
-</h1>
-
-<div class="row grow">
-
+<header class="page-header row justify-center">
   <div class="col">
+    <h1 class="float-left text-center text-md-left">
+      Flight Search
+    </h1>
+  </div>
+</header>
 
-    <div class="card">
-      <div class="card-body">
+<section class="row">
+  <div class="col-sm-12">
+    <section class="row">
+      <div class="col-md-12 col-lg-8">
 
-        <div class="form-group row">
-          <label for="from" class="col-2 col-form-label">From:</label>
-          <div class="col-10">
-            <input id="from" class="form-control" type="text" [ngModel]="from" (ngModelChange)="from = $event">
-            from: {{from}}
+        <div class="card mb-4">
+
+          <div class="card-body">
+            <h3 class="card-title">Flight Search</h3>
+
+
+            <div class="form-group row">
+              <label for="from" class="col-2 col-form-label">From:</label>
+              <div class="col-10">
+                <input id="from" class="form-control" type="text">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="to" class="col-2 col-form-label">To:</label>
+              <div class="col-10">
+                <input id="to" class="form-control" type="text">
+              </div>
+            </div>
+
+            <button class="btn btn-outline-secondary">
+              Search
+            </button>
           </div>
         </div>
 
-        <div class="form-group row">
-          <label for="to" class="col-2 col-form-label">To:</label>
-          <div class="col-10">
-            <input id="to" class="form-control" type="text" [(ngModel)]="to">
-            to: {{to}}
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title">Upcoming Flights</h3>
+
+            <div class="dropdown card-title-btn-container">
+              <button class="btn btn-sm btn-subtle" type="button">
+                <em class="fa fa-list-ul"></em> View All
+              </button>
+
+              <button class="btn btn-sm btn-subtle dropdown-toggle" type="button">
+                <em class="fa fa-cog"></em>
+              </button>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th>Id #</th>
+
+                  <th>From</th>
+
+                  <th>To</th>
+
+                  <th>Date</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                  <td>id</td>
+
+                  <td>from</td>
+
+                  <td>to</td>
+
+                  <td>date</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-12 col-lg-4">
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title">Basket</h3>
+
+            <h6 class="card-subtitle mb-2 text-muted">List of selected
+              flights</h6>
+
+            <ul class="todo-list mt-2">
+              <li class="todo-list-item">
+                Flights:
+                <pre>{{selectedFlightIds | json}}</pre>
+              </li>
+            </ul>
+
+            <div class="card-footer todo-list-footer">
+              <button class="btn btn-primary btn-md" id="btn-todo">Delete
+              </button>
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="card-footer bg-white">
-        <button
-          class="btn btn-outline-secondary"
-          [disabled]="!from || !to"
-
-          (click)="searchFlights(from, to)">
-          Search
-        </button>
-      </div>
-
-    </div>
+    </section>
   </div>
-  <app-flight-basket
-    class="col"
-    [selectedFlightIds]="selectedFlightIds">
-    <h2>Basket</h2>
-    <button class="btn" (click)="deleteBasket()">Delete</button>
-  </app-flight-basket>
-</div>
-
-<br/>
-<div class="row">
-
-  <div class="col">
-    <h2>
-      Available Flights
-      <button (click)="selectAll()">Select All</button>
-    </h2>
-    <br/>
-    <table class="table table-condensed">
-      <tr>
-        <th>Id</th>
-        <th>From</th>
-        <th>To</th>
-        <th>Date</th>
-        <th colspan="2">
-        </th>
-      </tr>
-
-      <app-flight-card
-        *ngFor="let f of flights"
-        [flight]="f"
-        [selected]="selectedFlightIds[f.id]"
-        (selectedChange)="selectFlight($event)"
-        appHighlight="blue">
-      </app-flight-card>
-
-      <tr *ngFor="let f of flights"
-          [class.table-warning]="selectedFlightIds[f.id]"
-          class="something table-warning">
-        <!--
-        class="something {{selectedFlightIds[f.id]?'table-warning':''}}"
-        [ngClass]="getClassNames()"
-        [class.table-warning]="selectedFlightIds[f.id]"
-        [class.table-danger]="selectedFlightIds[f.id]"
-        -->
-        <td>{{f.id}}</td>
-        <td>{{f.from}}</td>
-        <td>{{f.to}}</td>
-        <td>{{f.date | date:'dd.MM.yyyy'}}</td>
-        <td>
-          <a class="btn btn-outline-secondary btn-default" (click)="selectFlight(f.id)">
-            {{!selectedFlightIds[f.id]?'Select':'Deselect'}}
-          </a>
-        </td>
-
-      </tr>
-    </table>
-
-  </div>
-</div>
+</section>

@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import { CompileTypeMetadata, ParseSourceSpan, TemplateAst, TemplateAstPath } from '@angular/compiler';
-import { DiagnosticTemplateInfo } from '@angular/compiler-cli';
+import { DiagnosticTemplateInfo } from '@angular/compiler-cli/src/language_services';
 import { SelectorInfo, TemplateInfo } from './common';
 import { Span } from './types';
 export interface SpanHolder {

@@ -1,55 +1,24 @@
-<div id="main-container" class="container-fluid">
+<div class="container-fluid" id="wrapper">
+  <div class="row">
+    <nav class="sidebar col-xs-12 col-sm-4 col-lg-3 col-xl-2 bg-faded sidebar-style-1">
+      <h1 class="site-title"><a><em class="fa fa-rocket"></em> Flight App</a></h1>
 
-  <nav id="main-menu" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="#">MyFlights</a>
-    <button class="navbar-toggler d-lg-none"
-      type="button"
-      data-toggle="collapse"
-      data-target="#mainNavbar"
-      aria-controls="mainNavbar"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-      (click)="toggleNav()">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <a class="btn btn-default" id="menu-toggle"><em class="fa fa-bars"></em></a>
 
-    <div class=" navbar-collapse" id="mainNavbar"
-      [ngClass]="{collapse:navBarCollapsed}">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link"
-            routerLink="home"
-            (click)="toggleNav(true)">Home</a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link"
-            [routerLink]="['flight-search']"
-            (click)="toggleNav(true)">Flight</a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link"
-            [routerLink]="['test']"
-            (click)="toggleNav(true)">Test</a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link"
-            [routerLink]="['passenger']"
-            (click)="toggleNav(true)">Passenger</a>
-        </li>
+      <ul class="nav nav-pills flex-column sidebar-nav">
+        <li class="nav-item"><a class="nav-link active">
+          <em class="fa fa-dashboard"></em> Dashboard <span class="sr-only">(current)</span></a></li>
+        <li class="nav-item"><a class="nav-link"><em class="fa fa-calendar-o"></em> Widgets</a></li>
+        <li class="nav-item"><a class="nav-link"><em class="fa fa-bar-chart"></em> Charts</a></li>
+        <li class="nav-item"><a class="nav-link"><em class="fa fa-hand-o-up"></em> UI Elements</a></li>
+        <li class="nav-item"><a class="nav-link"><em class="fa fa-clone"></em> Cards</a></li>
       </ul>
-    </div>
-  </nav>
 
-  <div id="main-content" class="row">
-    <aside id="sidebar" class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
-      <nav id="side-nav">
-        <ul class="navbar-nav mr-auto">
-        </ul>
-      </nav>
-    </aside>
-    <main id="main-" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-      <router-outlet></router-outlet>
+      <a class="logout-button"><em class="fa fa-power-off"></em> Signout</a></nav>
+
+    <main class="col-xs-12 col-sm-8 offset-sm-4 col-lg-9 offset-lg-3 col-xl-10 offset-xl-2 pt-3 pl-4">
+      <app-flight-search></app-flight-search>
     </main>
   </div>
-
 </div>
+
