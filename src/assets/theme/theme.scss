@@ -16,6 +16,14 @@ $headline-font: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   border-radius: .3rem;
 }
 
+.is-header {
+  height: 70px;
+}
+.is-header,
+.has-header {
+  margin-top: -56px;
+}
+
 .tmp-rev {
   font-size: 4px;
 }
@@ -746,7 +754,7 @@ p {
 }
 
 input[type=checkbox]:checked + label {
-  text-decoration: line-through;
+  text-decoration: underline;
   color: $light-gray;
 }
 
@@ -755,8 +763,8 @@ input[type=checkbox]:checked + label {
   background-color: $almost-white;
 }
 
-.todo-list-item .trash .fa:hover {
-  color: #ef4040;
+.todo-list-item .edit .fa:hover {
+  color: $primary-color-hover;
 }
 
 .todo-list-footer {

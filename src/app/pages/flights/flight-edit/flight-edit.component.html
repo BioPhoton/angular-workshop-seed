@@ -1,0 +1,55 @@
+<h1>IFlight Edit Reactive
+  <small>ID:{{id}}</small>
+</h1>
+
+<div class="card" *ngIf="message">
+  <div class="card-body">
+  {{message}}
+  </div>
+</div>
+<div class="card">
+
+  <div class="card-body">
+    <div [formGroup]="formGroup">
+
+      <div class="form-group">
+        <label>Id:</label>
+        <input name="id"
+               formControlName="id"
+               class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>From:</label>
+        <input class="form-control"
+               name="from"
+               formControlName="from">
+      </div>
+
+      <div class="text-danger" *ngIf="formGroup.get('from').hasError('required') && formGroup.get('from').dirty">
+        Pflichtfeld
+      </div>
+
+      <div class="form-group">
+        <label>To:</label>
+        <input name="to"
+               formControlName="to"
+               class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Date:</label>
+        <input name="date"
+               formControlName="date"
+               class="form-control">
+      </div>
+
+      <div class="form-group">
+        <button (click)="save(formGroup)" class="btn btn-primary" [disabled]="formGroup.invalid && formGroup.dirty">
+          Save
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

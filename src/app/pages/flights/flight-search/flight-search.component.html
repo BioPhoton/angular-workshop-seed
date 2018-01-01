@@ -1,7 +1,7 @@
 <header class="page-header row justify-center">
   <div class="col">
     <h1 class="float-left text-center text-md-left">
-      Flight Search
+      Find Your Flight
     </h1>
   </div>
 </header>
@@ -13,25 +13,26 @@
 
         <div class="card mb-4">
 
-          <div class="card-body">
+          <div class="card-body" [formGroup]="searchForm">
             <h3 class="card-title">Flight Search</h3>
 
 
             <div class="form-group row">
               <label for="from" class="col-2 col-form-label">From:</label>
               <div class="col-10">
-                <input id="from" class="form-control" type="text">
+                <input id="from" class="form-control" formControlName="from" type="text">
               </div>
             </div>
 
             <div class="form-group row">
               <label for="to" class="col-2 col-form-label">To:</label>
               <div class="col-10">
-                <input id="to" class="form-control" type="text">
+                <input id="to" class="form-control" formControlName="to" type="text">
               </div>
             </div>
 
-            <button class="btn btn-outline-secondary">
+            <button class="btn btn-outline-secondary"
+            (click)="search(searchForm.get('from').value, searchForm.get('to').value)">
               Search
             </button>
           </div>
@@ -51,33 +52,22 @@
               </button>
             </div>
 
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                <tr>
-                  <th>Id #</th>
+            <ul class="todo-list mt-2">
+              <li class="todo-list-item" *ngFor="let f of (flights$ | async)">
+                <div class="form-check">
+                  <input type="checkbox" id="checkbox-{{f.id}}" [value]="selectedFlightIds[f.id]" (click)="toggleSelected(f.id)"/>
+                  <label for="checkbox-{{f.id}}">
+                    <span>{{f.from}} - {{f.to}} <i>departure: {{f.date | date:'HH:mm'}}</i></span>
+                  </label>
+                  <div class="float-right action-buttons">
+                    <a class="edit" [routerLink]="['/flights/edit', f.id]">
+                      <em class="fa fa-edit"></em>
+                    </a>
+                  </div>
+                </div>
+              </li>
+            </ul>
 
-                  <th>From</th>
-
-                  <th>To</th>
-
-                  <th>Date</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr>
-                  <td>id</td>
-
-                  <td>from</td>
-
-                  <td>to</td>
-
-                  <td>date</td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
           </div>
         </div>
 

@@ -1,22 +1,43 @@
 <div class="container-fluid" id="wrapper">
   <div class="row">
-    <nav class="sidebar col-xs-12 col-sm-4 col-lg-3 col-xl-2 bg-faded sidebar-style-1">
-      <h1 class="site-title"><a><em class="fa fa-rocket"></em> Flight App</a></h1>
+    <nav
+      class="sidebar col-xs-12 col-sm-4 col-lg-3 col-xl-2 bg-faded sidebar-style-1">
+      <h1 class="site-title"><a><em class="fa fa-rocket"></em> Flight App</a>
+      </h1>
 
-      <a class="btn btn-default" id="menu-toggle"><em class="fa fa-bars"></em></a>
+      <a class="btn btn-default" id="menu-toggle"><em
+        class="fa fa-bars"></em></a>
 
       <ul class="nav nav-pills flex-column sidebar-nav">
-        <li class="nav-item"><a class="nav-link active">
-          <em class="fa fa-dashboard"></em> Dashboard <span class="sr-only">(current)</span></a></li>
-        <li class="nav-item"><a class="nav-link"><em class="fa fa-users"></em> Passenger</a></li>
-        <li class="nav-item"><a class="nav-link"><em class="fa fa-plane"></em> Flights</a></li>
-        <li class="nav-item"><a class="nav-link"><em class="fa fa-ticket"></em> Bookings</a></li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" routerLink="home">
+            <em class="fa fa-dashboard"></em> Dashboard <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" routerLink="flights">
+            <em class="fa fa-users"></em>Passenger
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  routerLinkActive="active" routerLink="flights">
+            <em class="fa fa-plane"></em>
+            Flights
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">
+            <em class="fa fa-ticket"></em>Bookings
+          </a>
+        </li>
       </ul>
 
-      <a class="logout-button"><em class="fa fa-power-off"></em> Signout</a></nav>
+      <a class="logout-button"><em class="fa fa-power-off"></em> Signout</a>
+    </nav>
 
-    <main class="col-xs-12 col-sm-8 offset-sm-4 col-lg-9 offset-lg-3 col-xl-10 offset-xl-2 pt-3 pl-4">
-      <app-flight-search></app-flight-search>
+    <main
+      class="col-xs-12 col-sm-8 offset-sm-4 col-lg-9 offset-lg-3 col-xl-10 offset-xl-2 pt-3 pl-4">
+      <router-outlet></router-outlet>
     </main>
   </div>
 </div>
