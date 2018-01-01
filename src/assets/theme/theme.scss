@@ -105,6 +105,10 @@ p {
   font-size: .9rem;
 }
 
+.card {
+  border-radius: 0px;
+}
+
 .card h1 {
   border: none;
   margin: 0;
@@ -238,7 +242,7 @@ p {
 // Custom Button Styles
 
 .btn {
-  border-radius: 499rem;
+  border-radius: 0px;
   text-transform: uppercase;
   letter-spacing: .1rem;
   font-size: .8rem;
@@ -758,8 +762,5 @@ input[type=checkbox]:checked + label {
 .todo-list-footer {
   margin: -20px;
   margin-top: 2rem;
-  .btn {
-    border-radius: .4rem;
-  }
 }
 

@@ -1,17 +1,16 @@
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 
-import {environment} from '../../../../environments/environment';
-import {Flight} from '../models/Flight';
-import {IFlightResource} from './flight-resource.interface';
-import {Observable} from 'rxjs/Observable';
-
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/share';
+import {Observable} from 'rxjs/Observable';
+
+import {environment} from '../../../../environments/environment';
+import {Flight} from '../models/Flight';
 
 
 @Injectable()
-export class FlightResource implements IFlightResource {
+export class FlightResource {
 
   baseUrl: string;
   resourceName = 'flight';
@@ -21,7 +20,7 @@ export class FlightResource implements IFlightResource {
   }
 
   findById(id: string): Observable<Flight> {
-    const reqObj = { params: null}
+    const reqObj = {params: null}
     const params = new HttpParams().set('id', id)
     // Wont work!! => params.set('id', id)
     reqObj.params = params
@@ -33,7 +32,7 @@ export class FlightResource implements IFlightResource {
   }
 
 
-  find(from: string, to: string):  Observable<Flight[]> {
+  find(from: string, to: string): Observable<Flight[]> {
     const reqObj = {
       params: new HttpParams()
         .set('from', from || '')

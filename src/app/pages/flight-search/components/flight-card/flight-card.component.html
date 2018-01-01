@@ -1,8 +1,0 @@
-<h2>{{flight.from}} - {{flight.to}}</h2>
-<p>Date: {{flight.date | date:'dd.MM.yyyy'}}</p>
-
-<button (click)="toggleSelect()">{{!selected?'Select':'Deselect'}}</button>
-<button
-  [routerLink]="['/flight-edit', flight.id, {detail: 'yes'}]">
-  Edit
-</button>
