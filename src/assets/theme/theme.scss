@@ -56,9 +56,6 @@ a:hover, a:focus, a:active {
   text-decoration: none;
 }
 
-.nav-pills .nav-item.show .nav-link, .nav-pills .nav-link.active {
-  background-color: $primary-color;
-}
 a:not([href]):not([tabindex]) {
   color: $almost-white;
 }
@@ -770,5 +767,17 @@ input[type=checkbox]:checked + label {
 .todo-list-footer {
   margin: -20px;
   margin-top: 2rem;
+}
+
+
+///
+
+#main-content {
+  .nav-pills .nav-link.active {
+    background-color: transparent !important;
+    color: $primary-color !important;
+    border-bottom:2px solid $primary-color-hover;
+    border-radius: 0px;
+  }
 }
 

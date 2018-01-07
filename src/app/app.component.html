@@ -1,3 +1,4 @@
+<overlay-screen id="fullscreen"></overlay-screen>
 <div class="container-fluid" id="wrapper">
   <div class="row">
     <nav
@@ -20,14 +21,11 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link"  routerLinkActive="active" routerLink="flights">
+          <a class="nav-link"
+            routerLinkActive="active"
+            routerLink="flights">
             <em class="fa fa-plane"></em>
             Flights
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link">
-            <em class="fa fa-ticket"></em>Bookings
           </a>
         </li>
       </ul>
@@ -36,6 +34,7 @@
     </nav>
 
     <main
+      id="main-content"
       class="col-xs-12 col-sm-8 offset-sm-4 col-lg-9 offset-lg-3 col-xl-10 offset-xl-2 pt-3 pl-4">
       <router-outlet></router-outlet>
     </main>

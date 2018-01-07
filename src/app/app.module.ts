@@ -8,7 +8,6 @@ import {CoreModule} from './core/core.module';
 import {HomeComponent} from './pages/home/home.component';
 import {SharedModule} from './shared/shared.module';
 
-
 @NgModule({
   declarations: [
     // Components
@@ -36,5 +35,8 @@ import {SharedModule} from './shared/shared.module';
   bootstrap: [AppComponent]
 })
 export class AppModule {
+
+  constructor() {
+  }
 
 }

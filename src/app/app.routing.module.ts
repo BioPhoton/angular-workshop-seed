@@ -5,27 +5,32 @@ import {HomeComponent} from './pages/home/home.component';
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    redirectTo: 'home'
-  },
-  {
-    path: 'home',
-    component: HomeComponent
-  },
-  {
-    path: 'flights',
-    loadChildren: 'app/pages/flights/flights.module#FlightsModule',
-  },
-  {
-    path: '**',
-    redirectTo: 'home'
+    component: BaseComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'login'
+      },
+      {
+        path: 'home',
+        component: HomeComponent
+      },
+      {
+        path: 'flights',
+        loadChildren: 'app/pages/flights/flights.module#FlightsModule',
+      },
+      {
+        path: '**',
+        redirectTo: 'home'
+      }
+    ]
   }
 ];
 const routerOptions: ExtraOptions = {
-  enableTracing: true,
-  useHash: true
+  // enableTracing: true,
+  // useHash: true
 };
-
 
 @NgModule({
   imports: [
