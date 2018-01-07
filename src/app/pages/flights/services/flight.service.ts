@@ -1,50 +1,37 @@
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import {HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {Flight} from '@app/core/api/models/flight';
+import {FlightResource} from '@app/core/api/resources/flight.resource';
 import 'rxjs/add/observable/of';
 import {Observable} from 'rxjs/Observable';
 import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
-import {environment} from '../../../../environments/environment';
-import {Flight} from '../../../core/api/models/flight';
+import {catchError} from 'rxjs/operators';
 
 
 @Injectable()
 export class FlightService {
 
-  private baseUrl: string;
-  private resourceName = 'flight';
-
-  constructor(private http: HttpClient) {
-    this.baseUrl = [environment.baseUrl, this.resourceName].join('/');
+  constructor(private fr: FlightResource) {
   }
 
   findById(id: string): Observable<Flight> {
-    const reqObj = {params: null};
-    const params = new HttpParams().set('id', id);
-    reqObj.params = params;
-
-    return this.http
-      .get<Flight>(this.baseUrl, reqObj)
-      .catch(error => Observable.throw(error.json()));
+    return this.fr.findById(id)
+      .pipe(
+        catchError(error => Observable.throw(error.json()))
+      );
   }
 
   find(from: string, to: string): Observable<Flight[]> {
-    const reqObj = {
-      params: new HttpParams()
-        .set('from', from || '')
-        .set('to', to || '')
-    };
-
-    return this
-      .http
-      .get<Flight[]>(this.baseUrl, reqObj)
-      .catch(error => Observable.throw(error.json()));
+    return this.fr.find(from, to)
+      .pipe(
+        catchError(error => Observable.throw(error.json()))
+      );
   }
 
   create(flight: Flight): Observable<Flight> {
-    return this
-      .http
-      .post<Flight>(this.baseUrl, flight)
-      .catch((e: HttpErrorResponse) => {
+    return this.fr.create(flight)
+      .pipe(
+        catchError((e: HttpErrorResponse) => {
           let errMsg: string = 'Client Error or Network Error' + e.error.message;
           if (e instanceof HttpErrorResponse) {
             switch (e.status) {
@@ -59,7 +46,8 @@ export class FlightService {
             }
             return ErrorObservable.create({message: errMsg} as { message: string });
           }
-        });
+        })
+      );
   }
 
 }

@@ -10,11 +10,13 @@ import { FlightEditResolveService } from './flight-edit/resolver/flight-edit-res
 import { FlightService } from './services/flight.service';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
+    HttpClientModule,
     ReactiveFormsModule,
     FlightsRoutingModule
   ],

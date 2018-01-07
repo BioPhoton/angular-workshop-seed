@@ -5,26 +5,20 @@ import {HomeComponent} from './pages/home/home.component';
 const routes: Routes = [
   {
     path: '',
-    component: BaseComponent,
-    children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'login'
-      },
-      {
-        path: 'home',
-        component: HomeComponent
-      },
-      {
-        path: 'flights',
-        loadChildren: 'app/pages/flights/flights.module#FlightsModule',
-      },
-      {
-        path: '**',
-        redirectTo: 'home'
-      }
-    ]
+    pathMatch: 'full',
+    redirectTo: 'login'
+  },
+  {
+    path: 'home',
+    component: HomeComponent
+  },
+  {
+    path: 'flights',
+    loadChildren: 'app/pages/flights/flights.module#FlightsModule',
+  },
+  {
+    path: '**',
+    redirectTo: 'home'
   }
 ];
 const routerOptions: ExtraOptions = {
