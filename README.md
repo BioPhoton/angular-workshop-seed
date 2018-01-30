@@ -1,5 +1,7 @@
 # Angular Workshop Seed
 
+In case of an node-sass error: `npm rebuild node-sass --force`
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.3.
 
 ## Development server
