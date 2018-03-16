@@ -6,7 +6,7 @@ import 'rxjs/add/operator/share';
 import {Observable} from 'rxjs/Observable';
 
 import {environment} from '../../../../environments/environment';
-import {Flight} from '../models/Flight';
+import {Flight} from '../models/flight';
 
 
 @Injectable()
