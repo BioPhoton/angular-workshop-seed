@@ -3,11 +3,7 @@ import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
-import {CoreModule} from './core/core.module';
-import {FlightSearchComponent} from './pages/flight-search/flight-search.component';
-import {HomeComponent} from './pages/home/home.component';
-import {SharedModule} from './shared/shared.module';
-
+import {HomeComponent} from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -15,8 +11,7 @@ import {SharedModule} from './shared/shared.module';
     // Directives
     // Pipes
     AppComponent,
-    HomeComponent,
-    FlightSearchComponent
+    HomeComponent
   ],
   exports: [
     // Modules
@@ -26,8 +21,6 @@ import {SharedModule} from './shared/shared.module';
   imports: [
     // Modules
     BrowserModule,
-    CoreModule,
-    SharedModule,
     FormsModule
   ],
   providers: [
