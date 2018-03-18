@@ -15,11 +15,19 @@ html, body {
   height: 100%;
 }
 
+@media screen {
+
+}
 body {
   padding-top: 3.5rem;
+  @include media-breakpoint-down(xs) {
+    padding-top: 0;
+  }
 }
 
-#main-container {
+
+
+  #main-container {
   display: flex;
   flex-direction: column;
   height: 100%;
