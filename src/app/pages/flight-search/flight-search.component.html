@@ -9,7 +9,33 @@
 <section class="row">
   <div class="col-sm-12">
     <section class="row">
-      <div class="col-md-12 col-lg-8">
+
+      <div class="col-md-12">
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title">Basket</h3>
+
+            <h6 class="card-subtitle mb-2 text-muted">List of selected
+              flights</h6>
+
+            <ul class="todo-list mt-2">
+              <li class="todo-list-item">
+                Flights:
+                <pre>{{selectedFlightIds | json}}</pre>
+              </li>
+            </ul>
+
+            <div class="card-footer todo-list-footer">
+              <button class="btn btn-danger btn-md" id="btn-todo">
+                <em class="fa fa-2x fa-trash"></em>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
 
         <div class="card mb-4">
 
@@ -31,7 +57,7 @@
               </div>
             </div>
 
-            <button class="btn btn-outline-secondary">
+            <button type="button" class="btn btn-outline-secondary">
               Search
             </button>
           </div>
@@ -81,31 +107,6 @@
           </div>
         </div>
 
-      </div>
-
-      <div class="col-md-12 col-lg-4">
-
-        <div class="card mb-4">
-          <div class="card-body">
-            <h3 class="card-title">Basket</h3>
-
-            <h6 class="card-subtitle mb-2 text-muted">List of selected
-              flights</h6>
-
-            <ul class="todo-list mt-2">
-              <li class="todo-list-item">
-                Flights:
-                <pre>{{selectedFlightIds | json}}</pre>
-              </li>
-            </ul>
-
-            <div class="card-footer todo-list-footer">
-              <button class="btn btn-danger btn-md" id="btn-todo">
-                <em class="fa fa-2x fa-trash"></em>
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   </div>
