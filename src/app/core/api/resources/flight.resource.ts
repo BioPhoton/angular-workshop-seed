@@ -8,8 +8,9 @@ import {Observable} from 'rxjs/Observable';
 import {environment} from '../../../../environments/environment';
 import {Flight} from '../models/flight';
 
-
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class FlightResource {
 
   baseUrl: string;
