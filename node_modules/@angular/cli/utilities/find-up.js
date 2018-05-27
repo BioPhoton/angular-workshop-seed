@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const path = require("path");
 const fs_1 = require("fs");
-function findUp(names, from, stopOnNodeModules = false) {
+function findUp(names, from) {
     if (!Array.isArray(names)) {
         names = [names];
     }
@@ -15,15 +15,9 @@ function findUp(names, from, stopOnNodeModules = false) {
                 return p;
             }
         }
-        if (stopOnNodeModules) {
-            const nodeModuleP = path.join(currentDir, 'node_modules');
-            if (fs_1.existsSync(nodeModuleP)) {
-                return null;
-            }
-        }
         currentDir = path.dirname(currentDir);
     }
     return null;
 }
 exports.findUp = findUp;
-//# sourceMappingURL=/users/hansl/sources/hansl/angular-cli/utilities/find-up.js.map
+//# sourceMappingURL=/Users/hansl/Sources/hansl/angular-cli/utilities/find-up.js.map

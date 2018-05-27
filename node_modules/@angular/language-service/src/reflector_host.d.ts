@@ -1,3 +1,4 @@
+/// <amd-module name="@angular/language-service/src/reflector_host" />
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -18,4 +19,5 @@ export declare class ReflectorHost implements StaticSymbolResolverHost {
         [key: string]: any;
     }[] | undefined;
     moduleNameToFileName(moduleName: string, containingFile?: string): string | null;
+    getOutputName(filePath: string): string;
 }

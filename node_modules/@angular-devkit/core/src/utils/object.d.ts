@@ -10,3 +10,4 @@ export declare function mapObject<T, V>(obj: {
 }, mapper: (k: string, v: T) => V): {
     [k: string]: V;
 };
+export declare function deepCopy<T extends any>(value: T): T;

@@ -36,8 +36,9 @@ export declare enum JsonParseMode {
     CommentsAllowed = 1,
     SingleQuotesAllowed = 2,
     IdentifierKeyNamesAllowed = 4,
+    TrailingCommasAllowed = 8,
     Default = 0,
-    Loose = 7,
+    Loose = 15,
 }
 /**
  * Parse the JSON string and return its AST. The AST may be losing data (end comments are

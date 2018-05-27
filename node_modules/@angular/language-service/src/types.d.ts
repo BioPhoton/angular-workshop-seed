@@ -1,3 +1,4 @@
+/// <amd-module name="@angular/language-service/src/types" />
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -23,7 +24,7 @@ export interface TemplateSource {
     readonly source: string;
     /**
      * The version of the source. As files are modified the version should change. That is, if the
-     * `LanguageService` requesting template infomration for a source file and that file has changed
+     * `LanguageService` requesting template information for a source file and that file has changed
      * since the last time the host was asked for the file then this version string should be
      * different. No assumptions are made about the format of this string.
      *
@@ -133,7 +134,7 @@ export declare type Declarations = Declaration[];
  * Adding a required member or changing a method's parameters, is considered a breaking change and
  * will only be done when breaking changes are allowed. When possible, a new optional member will
  * be added and the old member will be deprecated. The new member will then be made required in
- * and the old member will be removed only when breaking chnages are allowed.
+ * and the old member will be removed only when breaking changes are allowed.
  *
  * While an interface is marked as experimental breaking-changes will be allowed between minor
  * releases. After an interface is marked as stable breaking-changes will only be allowed between
@@ -219,7 +220,7 @@ export declare enum DiagnosticKind {
  * DiagnosticMessageChain. The messages are intended to be formatted as separate
  * sentence fragments and indented.
  *
- * For compatiblity previous implementation, the values are expected to override
+ * For compatibility previous implementation, the values are expected to override
  * toString() to return a formatted message.
  *
  * @experimental
@@ -260,7 +261,7 @@ export interface Diagnostic {
  */
 export declare type Diagnostics = Diagnostic[];
 /**
- * A section of hover text. If the text is code then langauge should be provided.
+ * A section of hover text. If the text is code then language should be provided.
  * Otherwise the text is assumed to be Markdown text that will be sanitized.
  */
 export interface HoverTextSection {
@@ -269,17 +270,17 @@ export interface HoverTextSection {
      */
     readonly text: string;
     /**
-     * The langauge of the source if `text` is a souce code fragment.
+     * The language of the source if `text` is a source code fragment.
      */
     readonly language?: string;
 }
 /**
- * Hover infomration for a symbol at the hover location.
+ * Hover information for a symbol at the hover location.
  */
 export interface Hover {
     /**
      * The hover text to display for the symbol at the hover location. If the text includes
-     * source code, the section will specify which langauge it should be interpreted as.
+     * source code, the section will specify which language it should be interpreted as.
      */
     readonly text: HoverTextSection[];
     /**

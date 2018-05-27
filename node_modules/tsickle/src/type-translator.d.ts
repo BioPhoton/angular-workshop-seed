@@ -18,7 +18,7 @@ export declare class TypeTranslator {
      * A list of type literals we've encountered while emitting; used to avoid getting stuck in
      * recursive types.
      */
-    private readonly seenTypeLiterals;
+    private readonly seenAnonymousTypes;
     /**
      * Whether to write types suitable for an \@externs file. Externs types must not refer to
      * non-externs types (i.e. non ambient types) and need to use fully qualified names.
@@ -52,11 +52,14 @@ export declare class TypeTranslator {
     private translateEnumLiteral(type);
     private translateObject(type);
     /**
-     * translateTypeLiteral translates a ts.SymbolFlags.TypeLiteral type, which
-     * is the anonymous type encountered in e.g.
-     *   let x: {a: number};
+     * translateAnonymousType translates a ts.TypeFlags.ObjectType that is also
+     * ts.ObjectFlags.Anonymous. That is, this type's symbol does not have a name. This is the
+     * anonymous type encountered in e.g.
+     *     let x: {a: number};
+     * But also the inferred type in:
+     *     let x = {a: 1};  // type of x is {a: number}, as above
      */
-    private translateTypeLiteral(type);
+    private translateAnonymousType(type);
     /** Converts a ts.Signature (function signature) to a Closure function type. */
     private signatureToClosure(sig);
     /**

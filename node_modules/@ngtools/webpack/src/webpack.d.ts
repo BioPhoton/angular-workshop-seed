@@ -1,4 +1,11 @@
 /// <reference types="node" />
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
 import { Stats } from 'fs';
 export interface Request {
     request?: Request;
@@ -21,16 +28,6 @@ export interface ResolverPlugin extends Tapable {
 export interface LoaderCallback {
     (err: Error | null, source?: string, sourceMap?: string): void;
 }
-export interface ModuleReason {
-    dependency: any;
-    module: NormalModule;
-}
-export interface NormalModule {
-    buildTimestamp: number;
-    built: boolean;
-    reasons: ModuleReason[];
-    resource: string;
-}
 export interface NormalModuleFactory {
     plugin(event: string, callback: (data: NormalModuleFactoryRequest, callback: Callback<any>) => void): any;
 }
@@ -40,24 +37,16 @@ export interface NormalModuleFactoryRequest {
         issuer: string;
     };
 }
-export interface LoaderContext {
-    _module: NormalModule;
-    addDependency(path: string): void;
-    async(): LoaderCallback;
-    cacheable(): void;
-    readonly resourcePath: string;
-    readonly query: any;
-}
 export interface InputFileSystem {
-    stat(path: string, callback: Callback<any>): void;
-    readdir(path: string, callback: Callback<any>): void;
-    readFile(path: string, callback: Callback<any>): void;
+    stat(path: string, callback: Callback<Stats>): void;
+    readdir(path: string, callback: Callback<string[]>): void;
+    readFile(path: string, callback: Callback<string>): void;
     readJson(path: string, callback: Callback<any>): void;
-    readlink(path: string, callback: Callback<any>): void;
+    readlink(path: string, callback: Callback<string>): void;
     statSync(path: string): Stats;
     readdirSync(path: string): string[];
     readFileSync(path: string): string;
-    readJsonSync(path: string): string;
+    readJsonSync(path: string): any;
     readlinkSync(path: string): string;
     purge(changes?: string[] | string): void;
 }

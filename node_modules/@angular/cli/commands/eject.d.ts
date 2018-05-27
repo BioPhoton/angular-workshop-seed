@@ -1,8 +1,8 @@
-import { BuildOptions } from '../models/build-options';
-export declare const baseEjectCommandOptions: any;
-export interface EjectTaskOptions extends BuildOptions {
-    force?: boolean;
-    app?: string;
+import { Command, Option } from '../models/command';
+export default class EjectCommand extends Command {
+    readonly name: string;
+    readonly description: string;
+    readonly arguments: string[];
+    readonly options: Option[];
+    run(): void;
 }
-declare const EjectCommand: any;
-export default EjectCommand;

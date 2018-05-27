@@ -1,3 +1,4 @@
+/// <amd-module name="@angular/language-service/src/html_info" />
 export declare function elementNames(): string[];
 export declare function attributeNames(element: string): string[];
 export declare function attributeType(element: string, attribute: string): string | string[] | undefined;

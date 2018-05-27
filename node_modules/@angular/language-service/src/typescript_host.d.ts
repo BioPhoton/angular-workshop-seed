@@ -1,3 +1,4 @@
+/// <amd-module name="@angular/language-service/src/typescript_host" />
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -28,7 +29,7 @@ export declare class DummyResourceLoader extends ResourceLoader {
     get(url: string): Promise<string>;
 }
 /**
- * An implemntation of a `LanguageServiceHost` for a TypeScript project.
+ * An implementation of a `LanguageServiceHost` for a TypeScript project.
  *
  * The `TypeScriptServiceHost` implements the Angular `LanguageServiceHost` using
  * the TypeScript language services.
@@ -67,7 +68,7 @@ export declare class TypeScriptServiceHost implements LanguageServiceHost {
     private ensureAnalyzedModules();
     getTemplates(fileName: string): TemplateSources;
     getDeclarations(fileName: string): Declarations;
-    getSourceFile(fileName: string): ts.SourceFile;
+    getSourceFile(fileName: string): ts.SourceFile | undefined;
     updateAnalyzedModules(): void;
     private readonly program;
     private readonly checker;

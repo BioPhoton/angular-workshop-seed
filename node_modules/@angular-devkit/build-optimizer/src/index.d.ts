@@ -15,4 +15,8 @@ export { getImportTslibTransformer, testImportTslib } from './transforms/import-
 export { getPrefixClassesTransformer, testPrefixClasses } from './transforms/prefix-classes';
 export { getPrefixFunctionsTransformer } from './transforms/prefix-functions';
 export { getScrubFileTransformer, testScrubFile } from './transforms/scrub-file';
-export { getWrapEnumsTransformer, testWrapEnums } from './transforms/wrap-enums';
+export { getWrapEnumsTransformer } from './transforms/wrap-enums';
+/**
+ * @deprecated since version 6.0
+ */
+export declare function testWrapEnums(_content: string): boolean;

@@ -3,6 +3,8 @@ import * as ts from './typescript';
 import * as tsickle from './tsickle';
 /** Tsickle settings passed on the command line. */
 export interface Settings {
+    /** If provided, do not modify quoting of property accesses. */
+    disableAutoQuoting?: boolean;
     /** If provided, path to save externs to. */
     externsPath?: string;
     /** If provided, attempt to provide types rather than {?}. */

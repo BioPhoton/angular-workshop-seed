@@ -6,8 +6,29 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { BasicSourceMapConsumer, RawSourceMap, SourceMapConsumer, SourceMapGenerator } from 'source-map';
+import { RawSourceMap, SourceMapConsumer, SourceMapGenerator } from 'source-map';
 import * as ts from './typescript';
+/**
+ * This interface was defined in @types/source-map but is absent from the typings
+ * distributed in the source-map package.
+ * Copied from https://unpkg.com/@types/source-map@0.5.2/index.d.ts
+ * see https://github.com/angular/tsickle/issues/750
+ */
+export interface BasicSourceMapConsumer extends SourceMapConsumer {
+    file: string;
+    sourceRoot: string;
+    sources: string[];
+    sourcesContent: string[];
+}
+/**
+ * The toJSON method is introduced in
+ * https://github.com/mozilla/source-map/commit/7c06ac83dd6d75e65f71727184a2d8630a15bf58#diff-7945f6bb445d956794564e098ef20bb3
+ * However there is a breaking change in 0.7.
+ * see https://github.com/angular/tsickle/issues/750
+ */
+export declare type SourceMapGeneratorToJson = SourceMapGenerator & {
+    toJSON(): RawSourceMap;
+};
 export declare function containsInlineSourceMap(source: string): boolean;
 export declare function getInlineSourceMapCount(source: string): number;
 export declare function extractInlineSourceMap(source: string): string;

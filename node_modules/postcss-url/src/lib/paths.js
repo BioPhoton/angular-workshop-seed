@@ -23,7 +23,8 @@ const isUrlWithoutPathname = (assetUrl) => {
     return assetUrl[0] === '#'
         || assetUrl.indexOf('%23') === 0
         || assetUrl.indexOf('data:') === 0
-        || /^[a-z]+:\/\//.test(assetUrl);
+        || /^[a-z]+:\/\//.test(assetUrl)
+        || /^\/\//.test(assetUrl);
 };
 
 /**
@@ -34,7 +35,10 @@ const isUrlWithoutPathname = (assetUrl) => {
  * @returns {Boolean}
  */
 const isUrlShouldBeIgnored = (assetUrl, options) => {
-    return isUrlWithoutPathname(assetUrl) || (assetUrl[0] === '/' && !options.basePath);
+    const isAbsolutePath = assetUrl[0] === '/';
+    const isStartsWithTilde = assetUrl[0] === '~';
+
+    return isUrlWithoutPathname(assetUrl) || ((isAbsolutePath || isStartsWithTilde) && !options.basePath);
 };
 
 /**

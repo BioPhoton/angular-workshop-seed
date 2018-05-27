@@ -1,84 +1,36 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs = require("fs");
-const path = require("path");
-const Command = require('../ember-cli/lib/models/command');
-const stringUtils = require('ember-cli-string-utils');
-const lookupCommand = require('../ember-cli/lib/cli/lookup-command');
-const HelpCommand = Command.extend({
-    name: 'help',
-    description: 'Shows help for the CLI.',
-    works: 'everywhere',
-    availableOptions: [
-        {
-            name: 'short',
-            type: Boolean,
-            default: false,
-            aliases: ['s'],
-            description: 'Display command name and description only.'
-        },
-    ],
-    anonymousOptions: ['command-name (Default: all)'],
-    run: function (commandOptions, rawArgs) {
-        let commandFiles = fs.readdirSync(__dirname)
-            .filter(file => file.match(/\.(j|t)s$/) && !file.match(/\.d.ts$/))
-            .map(file => path.parse(file).name)
-            .map(file => file.toLowerCase());
-        let commandMap = commandFiles.reduce((acc, curr) => {
-            let classifiedName = stringUtils.classify(curr);
-            let defaultImport = require(`./${curr}`).default;
-            acc[classifiedName] = defaultImport;
-            return acc;
-        }, {});
-        if (rawArgs.indexOf('all') !== -1) {
-            rawArgs = []; // just act as if command not specified
-        }
-        commandFiles.forEach(cmd => {
-            const Command = lookupCommand(commandMap, cmd);
-            const command = new Command({
-                ui: this.ui,
-                project: this.project,
-                commands: this.commands,
-                tasks: this.tasks
-            });
-            if (command.hidden || command.unknown) {
-                return;
-            }
-            if (rawArgs.length > 0) {
-                let commandInput = rawArgs[0];
-                const aliases = Command.prototype.aliases;
-                if (aliases && aliases.indexOf(commandInput) > -1) {
-                    commandInput = Command.prototype.name;
-                }
-                if (cmd === commandInput) {
-                    if (commandOptions.short) {
-                        this.ui.writeLine(command.printShortHelp(commandOptions));
-                    }
-                    else if (command.printDetailedHelp(commandOptions, rawArgs)) {
-                        const result = command.printDetailedHelp(commandOptions, rawArgs);
-                        if (result instanceof Promise) {
-                            result.then(r => this.ui.writeLine(r));
-                        }
-                        else {
-                            this.ui.writeLine(result);
-                        }
-                    }
-                    else {
-                        this.ui.writeLine(command.printBasicHelp(commandOptions));
-                    }
-                }
-            }
-            else {
-                if (commandOptions.short) {
-                    this.ui.writeLine(command.printShortHelp(commandOptions));
-                }
-                else {
-                    this.ui.writeLine(command.printBasicHelp(commandOptions));
-                }
-            }
-        });
+const command_1 = require("../models/command");
+const core_1 = require("@angular-devkit/core");
+class HelpCommand extends command_1.Command {
+    constructor() {
+        super(...arguments);
+        this.name = 'help';
+        this.description = 'Help.';
+        this.arguments = [];
+        this.options = [];
     }
-});
-HelpCommand.overrideCore = true;
+    run(options) {
+        const commands = Object.keys(options.commandMap)
+            .map(key => {
+            const Cmd = options.commandMap[key];
+            const command = new Cmd(null, null);
+            return command;
+        })
+            .filter(cmd => !cmd.hidden && !cmd.unknown)
+            .map(cmd => ({
+            name: cmd.name,
+            description: cmd.description
+        }));
+        this.logger.info(`Available Commands:`);
+        commands.forEach(cmd => {
+            this.logger.info(`  ${core_1.terminal.cyan(cmd.name)} ${cmd.description}`);
+        });
+        this.logger.info(`\nFor more detailed help run "ng [command name] --help"`);
+    }
+    printHelp(options) {
+        return this.run(options);
+    }
+}
 exports.default = HelpCommand;
-//# sourceMappingURL=/users/hansl/sources/hansl/angular-cli/commands/help.js.map
+//# sourceMappingURL=/Users/hansl/Sources/hansl/angular-cli/commands/help.js.map

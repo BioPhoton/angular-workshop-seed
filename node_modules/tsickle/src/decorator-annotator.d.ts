@@ -9,11 +9,11 @@ export declare class DecoratorClassVisitor {
     private classDecl;
     private importedNames;
     /** Decorators on the class itself. */
-    decorators: ts.Decorator[];
+    private decorators;
     /** The constructor parameter list and decorators on each param. */
     private ctorParameters;
     /** Per-method decorators. */
-    propDecorators: Map<string, ts.Decorator[]>;
+    private propDecorators;
     constructor(typeChecker: ts.TypeChecker, rewriter: Rewriter, classDecl: ts.ClassDeclaration, importedNames: Array<{
         name: ts.Identifier;
         declarationNames: ts.Identifier[];

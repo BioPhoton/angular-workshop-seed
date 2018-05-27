@@ -1,3 +1,4 @@
+/// <amd-module name="@angular/language-service/src/locate_symbol" />
 import { TemplateInfo } from './common';
 import { Span, Symbol } from './types';
 export interface SymbolInfo {

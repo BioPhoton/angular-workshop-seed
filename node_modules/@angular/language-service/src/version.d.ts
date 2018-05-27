@@ -1,3 +1,4 @@
+/// <amd-module name="@angular/language-service/src/version" />
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -11,7 +12,4 @@
  * Entry point for all public APIs of the common package.
  */
 import { Version } from '@angular/core';
-/**
- * @stable
- */
 export declare const VERSION: Version;
