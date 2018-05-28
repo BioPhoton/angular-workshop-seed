@@ -3,9 +3,11 @@ import {Injectable} from '@angular/core';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/share';
+import {of} from 'rxjs/index';
 import {Observable} from 'rxjs/Observable';
 
 import {environment} from '../../../../environments/environment';
+import {flights} from '../mock.data';
 import {Flight} from '../models/flight';
 
 @Injectable({
@@ -13,6 +15,7 @@ import {Flight} from '../models/flight';
 })
 export class FlightResource {
 
+  useMockData = false;
   baseUrl: string;
   resourceName = 'flight';
 
@@ -22,9 +25,12 @@ export class FlightResource {
 
   findById(id: string): Observable<Flight> {
     const reqObj = {params: null}
-    const params = new HttpParams().set('id', id)
-    // Wont work!! => params.set('id', id)
+    const params = new HttpParams().set('id', id);
     reqObj.params = params
+
+    if (this.useMockData) {
+      return of({...flights[0], id: id.toString()});
+    }
 
     return this.http
       .get<Flight>(this.baseUrl, reqObj)
@@ -38,6 +44,10 @@ export class FlightResource {
       params: new HttpParams()
         .set('from', from || '')
         .set('to', to || '')
+    }
+
+    if (this.useMockData) {
+      return of(flights);
     }
 
     return this
