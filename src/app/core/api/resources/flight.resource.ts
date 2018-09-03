@@ -1,10 +1,9 @@
+
+import {throwError as observableThrowError, Observable, of} from 'rxjs';
+
+import {share, catchError} from 'rxjs/operators';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/share';
-import {of} from 'rxjs/index';
-import {Observable} from 'rxjs/Observable';
 
 import {environment} from '../../../../environments/environment';
 import {flights} from '../mock.data';
@@ -33,8 +32,8 @@ export class FlightResource {
     }
 
     return this.http
-      .get<Flight>(this.baseUrl, reqObj)
-      .catch(error => Observable.throw(error.json()))
+      .get<Flight>(this.baseUrl, reqObj).pipe(
+      catchError(error => observableThrowError(error.json())))
 
   }
 
@@ -52,8 +51,8 @@ export class FlightResource {
 
     return this
       .http
-      .get<Flight[]>(this.baseUrl, reqObj)
-      .catch(e => {
+      .get<Flight[]>(this.baseUrl, reqObj).pipe(
+      catchError(e => {
         console.log('error', e)
         let errMsg
         if (e instanceof HttpErrorResponse) {
@@ -64,17 +63,17 @@ export class FlightResource {
             default:
               errMsg = 'Client Error or Network Error'
           }
-          return Observable.throw(errMsg)
+          return observableThrowError(errMsg)
         }
-      })
+      }))
   }
 
   post(flight: Flight): Observable<Flight> {
     return this
       .http
-      .post<Flight>(this.baseUrl, flight)
-      .share()
-      .catch((e: HttpErrorResponse) => {
+      .post<Flight>(this.baseUrl, flight).pipe(
+      share(),
+      catchError((e: HttpErrorResponse) => {
         let errMsg = 'Client Error or Network Error'
 
         if (e instanceof HttpErrorResponse) {
@@ -93,8 +92,8 @@ export class FlightResource {
           }
 
         }
-        return Observable.throw({message: errMsg})
-      })
+        return observableThrowError({message: errMsg})
+      }),)
   }
 
 }
