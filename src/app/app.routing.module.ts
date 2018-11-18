@@ -14,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: 'flights',
-    loadChildren: 'app/pages/flights/flights.module#FlightsModule',
+    loadChildren: './app/pages/flights/flights.module#FlightsModule',
   },
   {
     path: '**',

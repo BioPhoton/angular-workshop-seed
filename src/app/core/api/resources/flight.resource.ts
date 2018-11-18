@@ -1,9 +1,9 @@
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/share';
-import {Observable} from 'rxjs/Observable';
+import 'rxjs/operators';
+import 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 import {environment} from 'environments/environment';
 import {Flight} from '../models/Flight';
