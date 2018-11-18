@@ -4,7 +4,7 @@ import {
   Resolve,
   RouterStateSnapshot
 } from '@angular/router';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Flight} from '../../../../core/api/models/flight';
 import {FlightService} from '../../services/flight.service';
 

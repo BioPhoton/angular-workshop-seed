@@ -1,9 +1,9 @@
+
+import {throwError as observableThrowError, Observable} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Flight} from '@app/core/api/models/flight';
 import {FlightResource} from '@app/core/api/resources/flight.resource';
-import 'rxjs/add/observable/of';
-import {Observable} from 'rxjs/Observable';
 import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 import {catchError} from 'rxjs/operators';
 
@@ -17,14 +17,14 @@ export class FlightService {
   findById(id: string): Observable<Flight> {
     return this.fr.findById(id)
       .pipe(
-        catchError(error => Observable.throw(error.json()))
+        catchError(error => observableThrowError(error.json()))
       );
   }
 
   find(from: string, to: string): Observable<Flight[]> {
     return this.fr.find(from, to)
       .pipe(
-        catchError(error => Observable.throw(error.json()))
+        catchError(error => observableThrowError(error.json()))
       );
   }
 

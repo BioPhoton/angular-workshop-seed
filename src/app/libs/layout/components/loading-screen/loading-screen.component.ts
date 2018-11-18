@@ -7,9 +7,8 @@ import {
   OnInit
 } from '@angular/core';
 import {OverlaySpinnerService} from '@app/libs/layout/services/overlay-spinner.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subject} from 'rxjs';
 import {delay, filter, pluck, switchMap, takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'overlay-screen',
