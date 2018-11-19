@@ -1,8 +1,11 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {select, Store} from '@ngrx/store';
 import {Flight} from 'flight-api/src/lib/models/flight';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {FlightService} from '../services/flight.service';
+import {FlightsLoaded} from '@app/pages/flights/+state/flight.actions';
+import {getFlights} from '@app/pages/flights/+state/flights.selectors';
 
 @Component({
   selector: 'flight-search',
@@ -23,19 +26,28 @@ export class FlightSearchComponent {
 
   searchForm: FormGroup;
 
-  constructor(private fs: FlightService, private fb: FormBuilder) {
+  constructor(
+    private fs: FlightService,
+    private fb: FormBuilder,
+    private store: Store<any>
+  ) {
     this.search('', '');
     this.searchForm = this.fb.group({
       from: [''],
       to: ['']
     });
+    this.store.pipe(
+      select(getFlights)
+    )
+      .subscribe((flights) => {
+      this.flights = flights;
+      });
   }
 
   search(from, to) {
-    console.log(from, to);
     this.fs
       .find(from, to)
-      .subscribe((v) => this.flights = v);
+      .subscribe((v) => this.store.dispatch(new FlightsLoaded({flights: v})));
   }
 
   toggleAll() {

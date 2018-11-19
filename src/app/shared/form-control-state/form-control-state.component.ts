@@ -24,8 +24,6 @@ export class FormControlStateComponent implements OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    console.log(changes);
-
     if ('errorColor' in changes) {
       this.errorColor = changes.errorColor.currentValue || 'danger'
     }

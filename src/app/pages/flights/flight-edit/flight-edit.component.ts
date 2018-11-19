@@ -29,9 +29,7 @@ export class FlightEditComponent implements OnInit {
     this.route
       .data
       .pipe(
-        tap(console.log),
         pluck('flight'),
-        tap(console.log),
       )
       .subscribe((flight) => {
         this.patchForm(flight);

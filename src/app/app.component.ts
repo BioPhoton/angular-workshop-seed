@@ -1,4 +1,10 @@
 import {Component} from '@angular/core';
+import {select, Store} from '@ngrx/store';
+import {State} from '@app/+state';
+import {Observable} from 'rxjs';
+import {IncrementCount} from '@app/+state/app.actions';
+import {getCount} from '@app/+state/app.selectors';
+import {AppState} from '@app/+state/app.reducer';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +13,14 @@ import {Component} from '@angular/core';
 export class AppComponent {
 
   navBarCollapsed = true;
+  count$: Observable<number>;
 
-  constructor() {
+  constructor(private store: Store<State>) {
+    this.count$ = this.store.pipe(select(getCount));
+  }
+
+  increment() {
+    this.store.dispatch(new IncrementCount({amount: 1}));
   }
 
   toggleNav(closeOnly?: boolean) {
