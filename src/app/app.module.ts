@@ -10,6 +10,11 @@ import {RouterModule} from '@angular/router';
 import {APP_ROUTES, ROUTER_OPTIONS} from '@app/app.routing';
 import {environment} from '../environments/environment';
 import {OverlaySpinnerModule} from '@app/modules/overlay-spinner/overlay-spinner.module';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './+state';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './+state/app.effects';
 
 const flightApiConfig = {baseUrl: environment.baseUrl};
 
@@ -33,7 +38,10 @@ const flightApiConfig = {baseUrl: environment.baseUrl};
     FlightApiModule.forRoot(flightApiConfig),
     OverlaySpinnerModule.forRoot(),
     SharedModule,
-    FormsModule
+    FormsModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot([AppEffects]),
   ],
   providers: [
     // Services
