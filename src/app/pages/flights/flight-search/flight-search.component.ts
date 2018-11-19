@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {Flight} from 'flight-api/src/lib/models/flight';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Flight} from '../../../core/api/models/flight';
 import {FlightService} from '../services/flight.service';
 
 @Component({
@@ -51,11 +51,14 @@ export class FlightSearchComponent {
   }
 
   selectAll() {
-    this.selectedFlightIds = this.flights
-      .reduce((state, flight) => {
-        state[flight.id] = true;
-        return state;
-      }, {});
+    this.flights$.subscribe(
+      flights => {
+        this.selectedFlightIds = flights.reduce((state, flight) => {
+          state[flight.id] = true;
+          return state;
+        }, {});
+      }
+    );
   }
 
   toggleSelected(id) {

@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {pluck, switchMap, tap} from 'rxjs/operators';
-import {Flight} from '../../../core/api/models/flight';
 import {FlightService} from '../services/flight.service';
+import {Flight} from 'flight-api/src/lib/models/flight';
 
 @Component({
   selector: 'flight-edit',

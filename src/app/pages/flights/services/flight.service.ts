@@ -1,11 +1,9 @@
-
 import {throwError as observableThrowError, Observable} from 'rxjs';
-import {HttpErrorResponse} from '@angular/common/http';
+// import {catchError} from 'rxjs/operators';
+// import {HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Flight} from '@app/core/api/models/flight';
-import {FlightResource} from '@app/core/api/resources/flight.resource';
-import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
-import {catchError} from 'rxjs/operators';
+import {FlightResource} from 'flight-api/src/lib/resources/flight.resource';
+import {Flight} from 'flight-api/src/lib/models/flight';
 
 
 @Injectable()
@@ -17,21 +15,21 @@ export class FlightService {
   findById(id: string): Observable<Flight> {
     return this.fr.findById(id)
       .pipe(
-        catchError(error => observableThrowError(error.json()))
+      // catchError(error => observableThrowError(error.json()))
       );
   }
 
   find(from: string, to: string): Observable<Flight[]> {
     return this.fr.find(from, to)
       .pipe(
-        catchError(error => observableThrowError(error.json()))
+       // catchError(error => observableThrowError(error.json()))
       );
   }
 
   create(flight: Flight): Observable<Flight> {
     return this.fr.create(flight)
       .pipe(
-        catchError((e: HttpErrorResponse) => {
+       /* catchError((e: HttpErrorResponse) => {
           let errMsg: string = 'Client Error or Network Error' + e.error.message;
           if (e instanceof HttpErrorResponse) {
             switch (e.status) {
@@ -44,9 +42,9 @@ export class FlightService {
               default:
                 errMsg = 'Server Error';
             }
-            return ErrorObservable.create({message: errMsg} as { message: string });
+            return observableThrowError({message: errMsg});
           }
-        })
+        })*/
       );
   }
 

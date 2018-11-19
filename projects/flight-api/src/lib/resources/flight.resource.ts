@@ -1,12 +1,8 @@
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-
-import 'rxjs/operators';
-import 'rxjs/operators';
+import {Inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-
-import {environment} from 'environments/environment';
 import {Flight} from '../models/Flight';
+import {FLIGHT_API_CONFIG_TOKEN} from '../tokens/flight-api-config.token';
 
 
 @Injectable()
@@ -15,8 +11,10 @@ export class FlightResource {
   private baseUrl: string;
   private resourceName = 'flight';
 
-  constructor(private http: HttpClient) {
-    this.baseUrl = [environment.baseUrl, this.resourceName].join('/');
+  constructor(private http: HttpClient,
+              @Inject(FLIGHT_API_CONFIG_TOKEN) private flightApiConfig
+  ) {
+    this.baseUrl = [flightApiConfig.baseUrl, this.resourceName].join('/');
   }
 
   findById(id: string): Observable<Flight> {

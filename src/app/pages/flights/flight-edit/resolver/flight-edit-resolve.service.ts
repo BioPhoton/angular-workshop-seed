@@ -5,8 +5,8 @@ import {
   RouterStateSnapshot
 } from '@angular/router';
 import {Observable} from 'rxjs';
-import {Flight} from '../../../../core/api/models/flight';
 import {FlightService} from '../../services/flight.service';
+import {Flight} from 'flight-api/src/lib/models/flight';
 
 @Injectable()
 export class FlightEditResolveService implements Resolve<Flight> {
@@ -15,7 +15,7 @@ export class FlightEditResolveService implements Resolve<Flight> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Flight> | Promise<Flight> | Flight {
-    const id = route.params.id || 0;
+    const id = (route.params as {id: string}).id || '0';
     return this.flightService.findById(id);
   }
 

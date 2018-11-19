@@ -18,8 +18,17 @@
       "dom"
     ],
     "paths": {
-      "@app" : [
+      "@app": [
+        "src/app"
+      ],
+      "@app/*": [
         "src/app/*"
+      ],
+      "flight-api": [
+        "projects/flight-api"
+      ],
+      "flight-api/*": [
+        "projects/flight-api/*"
       ]
     }
   }
