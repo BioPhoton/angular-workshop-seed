@@ -29,9 +29,9 @@ export class FlightEditComponent implements OnInit {
     this.route
       .data
       .pipe(
-        pluck('flight'),
+        pluck<object, Flight>('flight'),
       )
-      .subscribe((flight) => {
+      .subscribe((flight: Flight) => {
         this.patchForm(flight);
       });
   }

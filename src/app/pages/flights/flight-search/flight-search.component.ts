@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {FlightsLoaded} from '@app/pages/flights/+state/flight.actions';
+import {getFlights} from '@app/pages/flights/+state/flights.selectors';
 import {select, Store} from '@ngrx/store';
 import {Flight} from 'flight-api/src/lib/models/flight';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {FlightService} from '../services/flight.service';
-import {FlightsLoaded} from '@app/pages/flights/+state/flight.actions';
-import {getFlights} from '@app/pages/flights/+state/flights.selectors';
 
 @Component({
   selector: 'flight-search',
@@ -29,7 +29,7 @@ export class FlightSearchComponent {
   constructor(
     private fs: FlightService,
     private fb: FormBuilder,
-    private store: Store<any>
+    private store: Store<FlightState>
   ) {
     this.search('', '');
     this.searchForm = this.fb.group({
@@ -39,8 +39,8 @@ export class FlightSearchComponent {
     this.store.pipe(
       select(getFlights)
     )
-      .subscribe((flights) => {
-      this.flights = flights;
+      .subscribe((flights: Flight) => {
+        this.flights = flights;
       });
   }
 
