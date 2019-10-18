@@ -10,6 +10,7 @@ import {RouterModule} from '@angular/router';
 import {APP_ROUTES, ROUTER_OPTIONS} from '@app/app.routing';
 import {environment} from '../environments/environment';
 import {OverlaySpinnerModule} from '@app/modules/overlay-spinner/overlay-spinner.module';
+import {FlightResource} from "flight-api/src/lib/resources/flight.resource";
 
 const flightApiConfig = {baseUrl: environment.baseUrl};
 
@@ -37,6 +38,7 @@ const flightApiConfig = {baseUrl: environment.baseUrl};
   ],
   providers: [
     // Services
+    FlightResource
   ],
   bootstrap: [AppComponent]
 })
