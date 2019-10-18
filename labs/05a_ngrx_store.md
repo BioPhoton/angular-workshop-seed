@@ -16,6 +16,12 @@
   npm i -g @angular/cli
   ```
 
+Aldo install:
+```
+npm i @ngrx/schematics -D
+npm i @ngrx/store -S
+npm i @ngrx/effects -S
+```
 **If and only if** you don't have installed the CLI and the last command didn't work (e. g. b/c of your firewall) you can use the project-local CLI installation here. In this case, you have to execute the CLI with ``npm run``. The next snipped shows this by requesting the CLI's version:
 
   ```
@@ -38,7 +44,7 @@
 
 3. To setup the ``StoreModule`` and all the needed imports, switch into the folder ``projects\flight-app\src\app`` and run the following command.
   
-    ``ng generate store AppState --root --statePath=+state --module=app.module.ts --project=flight-app``
+    `` ng generate @ngrx/schematics:store AppState --root --statePath=+state --module=app.module.ts --project=angular-workshop-seed``
  
 4. Open the new `+state` folder and its ``index.ts`` file.
 
