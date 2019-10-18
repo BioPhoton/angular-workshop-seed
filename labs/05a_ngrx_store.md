@@ -16,7 +16,7 @@
   npm i -g @angular/cli
   ```
 
-Aldo install:
+Also install:
 ```
 npm i @ngrx/schematics -D
 npm i @ngrx/store -S
