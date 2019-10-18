@@ -69,7 +69,7 @@ npm i @ngrx/effects -S
 
 1. To setup the ``StoreModule`` for a feature module, switch into the folder ``projects\flight-app\src\app`` and use the following command:
   
-    `ng generate feature flight-booking/+state/FlightBooking --module=flight-booking/flight-booking.module.ts --spec=false --creators`
+    `ng generate @ngrx/schematics:feature pages/flights/+state/FlightBooking --module=pages/flights/flights.module.ts --spec=false --creators`
     
     Open the new `+state` folder and inspect the files.
       
