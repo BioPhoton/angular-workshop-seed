@@ -1,8 +1,3 @@
-- contrast red box whit text
-- spacing everywhere
-- title jumpng
-
-
 # Manage state with @ngrx/store
 
 - [Manage state with @ngrx/store](#manage-state-with-ngrxstore)
