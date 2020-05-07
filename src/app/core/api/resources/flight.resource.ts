@@ -14,7 +14,7 @@ import {Flight} from '../models/flight';
 })
 export class FlightResource {
 
-  useMockData = false;
+  useMockData = true;
   baseUrl: string;
   resourceName = 'flight';
 
@@ -28,7 +28,7 @@ export class FlightResource {
     reqObj.params = params
 
     if (this.useMockData) {
-      return of({...flights[0], id: id.toString()});
+      return of({...flights.find(f => f.id === id.toString())});
     }
 
     return this.http
@@ -40,13 +40,18 @@ export class FlightResource {
 
   find(from: string, to: string): Observable<Flight[]> {
     const reqObj = {
-      params: new HttpParams()
-        .set('from', from || '')
-        .set('to', to || '')
+      params: {from, to}
     }
 
     if (this.useMockData) {
-      return of(flights);
+        let result = flights;
+        if(from) {
+          result = result.filter(f => f.from.indexOf(from) !== -1)
+        }
+        if(to) {
+          result = result.filter(f => f.to.indexOf(to) !== -1)
+        }
+        return  of(result);
     }
 
     return this
@@ -69,6 +74,12 @@ export class FlightResource {
   }
 
   post(flight: Flight): Observable<Flight> {
+
+    if (this.useMockData) {
+      flight.id = ~~(Math.random()  * 1000)+'';
+      flights.push(flight)
+    }
+
     return this
       .http
       .post<Flight>(this.baseUrl, flight).pipe(

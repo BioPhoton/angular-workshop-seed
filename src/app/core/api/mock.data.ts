@@ -17,7 +17,7 @@ export const flights: Flight[] = [
   },
   {
     id: '3',
-    from: 'Vienna',
+    from: 'Berlin',
     to: 'Graz',
     date: new Date().toISOString(),
     delayed: false
