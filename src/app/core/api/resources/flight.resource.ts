@@ -14,7 +14,7 @@ import {Flight} from '../models/flight';
 })
 export class FlightResource {
 
-  useMockData = true;
+  useMockData = false;
   baseUrl: string;
   resourceName = 'flight';
 

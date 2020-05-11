@@ -1,12 +1,12 @@
 import {CommonModule} from '@angular/common';
 import {NgModule, Optional, SkipSelf} from '@angular/core';
-import {FlightResource} from './api/resources/flight.resource';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {environment} from '../../environments/environment';
+import {HttpClientModule} from '@angular/common/http';
+import {InMemoryDataModule} from "./in-memory-data/in-memory-data.module";
 
 @NgModule({
   imports: [
-    CommonModule, HttpClientModule
+    CommonModule, HttpClientModule,
+    // InMemoryDataModule
   ],
   exports: [CommonModule, HttpClientModule],
   providers: []
