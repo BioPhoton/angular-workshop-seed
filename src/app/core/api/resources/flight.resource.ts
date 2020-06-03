@@ -28,7 +28,7 @@ export class FlightResource {
     reqObj.params = params
 
     if (this.useMockData) {
-      return of({...flights.find(f => f.id === id.toString())});
+      return of({...flights.find(f => f.id)});
     }
 
     return this.http
@@ -76,7 +76,7 @@ export class FlightResource {
   post(flight: Flight): Observable<Flight> {
 
     if (this.useMockData) {
-      flight.id = ~~(Math.random()  * 1000)+'';
+      flight.id = ~~(Math.random()  * 1000);
       flights.push(flight)
     }
 
