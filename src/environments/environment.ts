@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://angular.at/api'
+  baseUrl: 'http://my-anglar-app.at/api'
 };
