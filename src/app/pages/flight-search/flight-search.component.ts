@@ -22,7 +22,6 @@ export class FlightSearchComponent {
     this.fr.find(f, t)
       .subscribe(
         newFlights => {
-          console.log(newFlights);
           this.flights = newFlights;
         }
       );
