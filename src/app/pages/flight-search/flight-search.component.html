@@ -1,113 +1,137 @@
-<header class="page-header row justify-center">
-  <div class="col">
-    <h1 class="float-left text-center text-md-left">
-      Flight Search
-    </h1>
-  </div>
-</header>
+<ng-container *ngIf="vm.m$ | async as m">
 
-<section class="row">
-  <div class="col-sm-12">
-    <section class="row">
+  <header class="page-header row justify-center">
+    <div class="col">
+      <h1 class="float-left text-center text-md-left">
+        Flight Search
+      </h1>
+    </div>
+  </header>
 
-      <div class="col-md-12">
+  <section class="row">
+    <div class="col-sm-12">
+      <section class="row">
 
-        <div class="card mb-4">
-          <div class="card-body">
-            <h3 class="card-title">Basket</h3>
-
-            <h6 class="card-subtitle mb-2 text-muted">List of selected
-              flights</h6>
-
-            <ul class="todo-list mt-2">
-              <li class="todo-list-item">
-                Flights:
-                <pre>{{selectedFlightIds | json}}</pre>
-              </li>
-            </ul>
-
-            <div class="card-footer todo-list-footer">
-              <button class="btn btn-danger btn-md" id="btn-todo">
-                <em class="fa fa-2x fa-trash"></em>
-              </button>
-            </div>
-          </div>
+        <div class="col-md-12">
+          <button *ngIf="!m.isLoggedIn" (click)="vm.logInTrigger.next($event)">logIn</button>
+          <button *ngIf="m.isLoggedIn" (click)="vm.logOutTrigger.next($event)">logOut</button>
         </div>
-      </div>
 
-      <div class="col-md-12">
+        <div class="col-md-12">
 
-        <div class="card mb-4">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h3 class="card-title">Basket</h3>
 
-          <div class="card-body">
-            <h3 class="card-title">Flight Search</h3>
+              <h6 class="card-subtitle mb-2 text-muted">List of selected
+                flights</h6>
 
+              <ul class="todo-list mt-2">
+                <li class="todo-list-item">
+                  Flights:
+                  <pre>{{m.selectedFlightIds | json}}</pre>
+                </li>
+              </ul>
 
-            <div class="form-group row">
-              <label for="from" class="col-2 col-form-label">From:</label>
-              <div class="col-10">
-                <input id="from" class="form-control" type="text">
+              <div class="card-footer todo-list-footer">
+                <button class="btn btn-danger btn-md" id="btn-todo">
+                  <em class="fa fa-2x fa-trash"></em>
+                </button>
               </div>
             </div>
+          </div>
+        </div>
 
-            <div class="form-group row">
-              <label for="to" class="col-2 col-form-label">To:</label>
-              <div class="col-10">
-                <input id="to" class="form-control" type="text">
+        <div class="col-md-12">
+
+          <div class="card mb-4">
+
+            <div class="card-body">
+              <h3 class="card-title">Flight Search</h3>
+
+
+              <div class="form-group row">
+                <label for="from" class="col-2 col-form-label">From: {{m.from}}</label>
+                <div class="col-10">
+                  <input id="from"
+                         [ngModel]="m.from"
+                         (ngModelChange)="vm.fromChange.next($event)"
+                         class="form-control" type="text">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="to" class="col-2 col-form-label">To:</label>
+                <div class="col-10">
+                  <input id="to"  [ngModel]="m.to"
+                         (ngModelChange)="vm.toChange.next($event)"
+                         class="form-control" type="text">
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-outline-secondary"
+                      (click)="vm.searchTrigger.next($event)">
+                Search
+              </button>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-body">
+              <h3 class="card-title">Upcoming Flights</h3>
+
+              <div class="dropdown card-title-btn-container">
+                <button class="btn btn-sm btn-subtle" type="button">
+                  <em class="fa fa-list-ul"></em> View All
+                </button>
+
+                <button class="btn btn-sm btn-subtle dropdown-toggle" type="button">
+                  <em class="fa fa-cog"></em>
+                </button>
+              </div>
+
+              <div class="table-responsive">
+                <app-flight-card
+                  *ngFor="let f of m.flights"
+                  [flight]="f"
+                  [selected]="m.selectedFlightIds[f.id]"
+                  (selectTrigger)="vm.selectTrigger.next($event)">
+                </app-flight-card>
+                <!-- <table class="table table-striped">
+                  <thead>
+                  <tr>
+                    <th>Id #</th>
+
+                    <th>From</th>
+
+                    <th>To</th>
+
+                    <th>Date</th>
+
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+
+                  <tbody>
+                  <tr *ngFor="let f of flights"
+                      [ngClass]="{'table-success': selectedFlightIds[f.id]}">
+                    <td>{{f.id}}</td>
+
+                    <td>{{f.from}}</td>
+
+                    <td>{{f.to}}</td>
+
+                    <td>{{f.date}}</td>
+                    <td><button (click)="selectFlight(f.id)">click me</button></td>
+                  </tr>
+                  </tbody>
+                </table> -->
               </div>
             </div>
-
-            <button type="button" class="btn btn-outline-secondary">
-              Search
-            </button>
           </div>
+
         </div>
-
-        <div class="card mb-4">
-          <div class="card-body">
-            <h3 class="card-title">Upcoming Flights</h3>
-
-            <div class="dropdown card-title-btn-container">
-              <button class="btn btn-sm btn-subtle" type="button">
-                <em class="fa fa-list-ul"></em> View All
-              </button>
-
-              <button class="btn btn-sm btn-subtle dropdown-toggle" type="button">
-                <em class="fa fa-cog"></em>
-              </button>
-            </div>
-
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                <tr>
-                  <th>Id #</th>
-
-                  <th>From</th>
-
-                  <th>To</th>
-
-                  <th>Date</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr>
-                  <td>id</td>
-
-                  <td>from</td>
-
-                  <td>to</td>
-
-                  <td>date</td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-  </div>
-</section>
+      </section>
+    </div>
+  </section>
+</ng-container>

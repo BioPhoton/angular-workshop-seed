@@ -1,34 +1,31 @@
 import {Component} from '@angular/core';
-import {Flight} from '../../core/api/models/flight';
-import {FlightResource} from '../../core/api/resources/flight.resource';
+import {FlightSearchAdapter} from "./flight-search.adapter";
+import {SearchFlightViewModel} from "./search-flight.view-model";
+import {map, switchMap, withLatestFrom} from "rxjs/operators";
+import {combineLatest} from "rxjs";
 
 @Component({
   selector: 'app-flight-search',
-  templateUrl: './flight-search.component.html'
+  templateUrl: './flight-search.component.html',
+  providers: [SearchFlightViewModel, FlightSearchAdapter]
 })
 export class FlightSearchComponent {
 
-  selectedFlightIds: { [key: string]: boolean } = {};
-  flights: Flight[] = [];
+  constructor(private fa: FlightSearchAdapter,
+              public vm: SearchFlightViewModel
+  ) {
+    vm.connect('flights', this.fa.flights$);
 
-  fr: FlightResource;
+    const from$ = this.vm.select('from');
+    const to$ = this.vm.select('to');
 
-  constructor(fr: FlightResource) {
-    this.fr = fr;
-    this.searchFlights('', '');
+    const searchParams$ = vm.searchTrigger.pipe(
+      withLatestFrom(combineLatest([from$, to$])),
+      map((r) => r[1])
+    );
+    vm.hold(searchParams$, ([from ,to]) => fa.search(from ,to));
+
   }
 
-  searchFlights(f, t) {
-    this.fr.find(f, t)
-      .subscribe(
-        newFlights => {
-          this.flights = newFlights;
-        }
-      );
-  }
-
-  selectFlight(id: string) {
-    this.selectedFlightIds[id] = !this.selectedFlightIds[id];
-  }
 
 }

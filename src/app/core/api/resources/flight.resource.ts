@@ -33,7 +33,7 @@ export class FlightResource {
 
     return this.http
       .get<Flight>(this.baseUrl, reqObj).pipe(
-      catchError(error => observableThrowError(error.json())))
+      catchError(error => observableThrowError(error.message)))
 
   }
 
