@@ -1,0 +1,5 @@
+<div tabindex="0" class="btn-group" (blur)="onTouch()">
+  <button tabindex="-1" class="btn btn-outline-primary" [disabled]="disabled" (click)="decrement()">-</button>
+  <button tabindex="-1" class="btn btn-link" [disabled]="disabled">{{value}}</button>
+  <button tabindex="-1" class="btn btn-outline-primary" (click)="increment()" [disabled]="disabled">+</button>
+</div>

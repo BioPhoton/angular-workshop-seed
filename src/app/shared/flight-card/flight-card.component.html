@@ -1,0 +1,8 @@
+<h2>{{flight.id}}</h2>
+
+<p>{{flight.from}} - {{flight.to}}</p>
+
+<p>{{flight.date}}</p>
+
+<button (click)="onClick()">select</button>
+<button [routerLink]="['/edit', flight.id]">edit</button>
