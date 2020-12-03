@@ -82,7 +82,15 @@
             </div>
 
             <div class="table-responsive">
-              <table class="table table-striped">
+
+             <app-article
+               [article]="flight"
+               [selected]="selectedFlightIds[flight.id]"
+               (selectedChange)="selectFlight($event)"
+               *ngFor="let flight of flights">
+
+             </app-article>
+           <!--   <table class="table table-striped">
                 <thead>
                 <tr>
                   <th>Id #</th>
@@ -114,7 +122,7 @@
                   </td>
                 </tr>
                 </tbody>
-              </table>
+              </table> -->
             </div>
           </div>
         </div>

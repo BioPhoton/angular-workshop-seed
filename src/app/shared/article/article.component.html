@@ -1,0 +1,10 @@
+<h1>{{article.from}} - {{article.to}}</h1>
+<p>{{article.date | date:'dd.MM.yyyy'}}</p>
+<button class="btn"
+        [ngClass]="{
+          'btn-danger': selected,
+          'btn-primary': !selected
+        }"
+        (click)="selectedChange.emit(article.id)">
+  {{selected ? 'Remove' : 'Select'}}
+</button>
