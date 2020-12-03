@@ -8,26 +8,25 @@ import {FlightResource} from '../../core/api/resources/flight.resource';
 })
 export class FlightSearchComponent {
 
+  from = 'Wien';
+  to = 'Berlin';
+
   selectedFlightIds: { [key: string]: boolean } = {};
   flights: Flight[] = [];
 
-  fr: FlightResource;
-
-  constructor(fr: FlightResource) {
-    this.fr = fr;
+  constructor(public fr: FlightResource) {
     this.searchFlights('', '');
   }
 
-  searchFlights(f, t) {
-    this.fr.find(f, t)
-      .subscribe(
-        newFlights => {
-          this.flights = newFlights;
-        }
-      );
+  searchFlights(from, to) {
+   this.fr.find(from, to).subscribe(
+     newFlights => {
+       this.flights = newFlights;
+     }
+   );
   }
 
-  selectFlight(id: string) {
+  selectFlight(id) {
     this.selectedFlightIds[id] = !this.selectedFlightIds[id];
   }
 

@@ -37,7 +37,6 @@ export class FlightResource {
 
   }
 
-
   find(from: string, to: string): Observable<Flight[]> {
     const reqObj = {
       params: {from, to}

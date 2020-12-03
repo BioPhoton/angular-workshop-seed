@@ -44,14 +44,18 @@
 
 
             <div class="form-group row">
-              <label for="from" class="col-2 col-form-label">From:</label>
+              <label for="from" class="col-2 col-form-label">
+                From: {{from}}
+              </label>
               <div class="col-10">
                 <input id="from" class="form-control" type="text">
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="to" class="col-2 col-form-label">To:</label>
+              <label for="to" class="col-2 col-form-label">
+                To:  {{to}}
+              </label>
               <div class="col-10">
                 <input id="to" class="form-control" type="text">
               </div>
@@ -88,18 +92,26 @@
                   <th>To</th>
 
                   <th>Date</th>
+
+                  <th>Action</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                <tr>
-                  <td>id</td>
+                <tr *ngFor="let flight of flights">
+                  <td>{{flight.id}}</td>
 
-                  <td>from</td>
+                  <td>{{flight.from}}</td>
 
-                  <td>to</td>
+                  <td>{{flight.to}}</td>
 
-                  <td>date</td>
+                  <td>{{flight.date}}</td>
+
+                  <td>
+                    <button (click)="selectFlight(flight.id)">
+                      {{selectedFlightIds[flight.id] ? 'Remove' : 'Select'}}
+                    </button>
+                  </td>
                 </tr>
                 </tbody>
               </table>
