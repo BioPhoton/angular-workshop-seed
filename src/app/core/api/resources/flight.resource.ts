@@ -76,7 +76,7 @@ export class FlightResource {
   post(flight: Flight): Observable<Flight> {
 
     if (this.useMockData) {
-      flight.id = ~~(Math.random()  * 1000);
+      flight.id = ~~(Math.random()  * 1000)+'';
       flights.push(flight)
     }
 
