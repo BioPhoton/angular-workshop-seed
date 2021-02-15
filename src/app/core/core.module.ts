@@ -6,7 +6,7 @@ import {InMemoryDataModule} from "./in-memory-data/in-memory-data.module";
 @NgModule({
   imports: [
     CommonModule, HttpClientModule,
-    InMemoryDataModule
+//    InMemoryDataModule
   ],
   exports: [CommonModule, HttpClientModule],
   providers: []
