@@ -12,14 +12,14 @@
 
       <div class="col-md-12">
 
-        <div class="card mb-4">
+        <div class="card mb-4" *ngIf="selectedGive()">
           <div class="card-body">
             <h3 class="card-title">Basket</h3>
 
             <h6 class="card-subtitle mb-2 text-muted">List of selected
               flights</h6>
 
-            <ul class="todo-list mt-2">
+            <ul class="todo-list mt-2" >
               <li class="todo-list-item">
                 Flights:
                 <pre>{{selectedFlightIds | json}}</pre>
@@ -44,20 +44,28 @@
 
 
             <div class="form-group row">
-              <label for="from" class="col-2 col-form-label">From:</label>
+              <label for="from" class="col-2 col-form-label">From: {{from}}</label>
               <div class="col-10">
-                <input id="from" class="form-control" type="text">
+                <input id="from"
+                       class="form-control"
+                       type="text"
+                       [ngModel]="from"
+                       (ngModelChange)="from = $event"
+                >
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="to" class="col-2 col-form-label">To:</label>
+              <label for="to" class="col-2 col-form-label">To: {{to}}</label>
               <div class="col-10">
-                <input id="to" class="form-control" type="text">
+                <input id="to" class="form-control" type="text"
+                       [(ngModel)]="to"
+                >
               </div>
             </div>
 
-            <button type="button" class="btn btn-outline-secondary">
+            <button type="button" class="btn btn-outline-secondary"
+            (click)="searchFlights(from, to)">
               Search
             </button>
           </div>
@@ -66,7 +74,6 @@
         <div class="card mb-4">
           <div class="card-body">
             <h3 class="card-title">Upcoming Flights</h3>
-
             <div class="dropdown card-title-btn-container">
               <button class="btn btn-sm btn-subtle" type="button">
                 <em class="fa fa-list-ul"></em> View All
@@ -77,7 +84,19 @@
               </button>
             </div>
 
-            <div class="table-responsive">
+            <div class="row">
+              <app-flight-tile
+                class="col col-3"
+                appOutdated
+                [date]="flight.date"
+                *ngFor="let flight of flights"
+                [flight]="flight"
+                [selected]="selectedFlightIds[flight.id]"
+                (selectedChange)="selectFlight($event)"
+              >
+
+              </app-flight-tile>
+              <!--
               <table class="table table-striped">
                 <thead>
                 <tr>
@@ -88,21 +107,34 @@
                   <th>To</th>
 
                   <th>Date</th>
+
+                  <th>Action</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                <tr>
-                  <td>id</td>
+                <tr *ngFor="let flight of flights"
+                    [ngClass]="{
+                      'table-success': selectedFlightIds[flight.id]
+                    }"
+                >
+                  <td>{{flight.id}}</td>
 
-                  <td>from</td>
+                  <td>{{flight.from}}</td>
 
-                  <td>to</td>
+                  <td>{{flight.to}}</td>
 
-                  <td>date</td>
+                  <td>{{flight.date | date:'dd.MM.yyyy'}}</td>
+
+                  <td>
+                    <button class="btn btn-info" (click)="selectFlight(flight.id)">
+                      {{selectedFlightIds[flight.id] ? 'Deselect': 'Select'}}
+                    </button>
+                  </td>
                 </tr>
                 </tbody>
               </table>
+              -->
             </div>
           </div>
         </div>

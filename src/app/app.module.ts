@@ -1,12 +1,17 @@
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
 import {CoreModule} from './core/core.module';
 import {FlightSearchComponent} from './pages/flight-search/flight-search.component';
-import {HomeComponent} from './pages/home/home.component';
 import {SharedModule} from './shared/shared.module';
+import {FlightTileComponent} from './pages/flight-search/flight-tile/flight-tile.component';
+import {RouterModule} from "@angular/router";
+import {Error404Component} from './pages/error404/error404.component';
+import {FlightEditComponent} from './pages/flight-search/flight-edit/flight-edit.component';
+import {FlightComponent} from './pages/flight/flight.component';
+import {PassengerComponent} from './pages/flight/passenger/passenger.component';
 
 
 @NgModule({
@@ -15,8 +20,12 @@ import {SharedModule} from './shared/shared.module';
     // Directives
     // Pipes
     AppComponent,
-    HomeComponent,
-    FlightSearchComponent
+    FlightSearchComponent,
+    FlightTileComponent,
+    Error404Component,
+    FlightEditComponent,
+    FlightComponent,
+    PassengerComponent
   ],
   exports: [
     // Modules
@@ -28,7 +37,50 @@ import {SharedModule} from './shared/shared.module';
     BrowserModule,
     CoreModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule.forRoot([
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'home'
+      },
+      {
+        path: 'home',
+        loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)
+      },
+      {
+        path: 'flight',
+        component: FlightComponent,
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'search'
+          },
+          {
+            path: 'search',
+            component: FlightSearchComponent
+          },
+          {
+            path: 'passenger',
+            component: PassengerComponent
+          },
+          {
+            path: 'edit/:id',
+            component: FlightEditComponent
+          }
+        ]
+      },
+      {
+        path: 'error',
+        component: Error404Component
+      },
+      {
+        path: '**',
+        redirectTo: 'error'
+      }
+    ])
   ],
   providers: [
     // Services
