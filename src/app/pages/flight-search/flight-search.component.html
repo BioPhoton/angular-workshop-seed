@@ -49,8 +49,7 @@
                 <input id="from"
                        class="form-control"
                        type="text"
-                       [ngModel]="from"
-                       (ngModelChange)="from = $event"
+                       [(ngModel)]="from"
                 >
               </div>
             </div>
@@ -82,6 +81,11 @@
               <button class="btn btn-sm btn-subtle dropdown-toggle" type="button">
                 <em class="fa fa-cog"></em>
               </button>
+              <button
+                (click)="refresh$.next()"
+                class="btn btn-sm btn-subtle" type="button">
+                <em class="fa fa-refresh"></em>
+              </button>
             </div>
 
             <div class="row">
@@ -89,7 +93,7 @@
                 class="col col-3"
                 appOutdated
                 [date]="flight.date"
-                *ngFor="let flight of flights"
+                *ngFor="let flight of flights$ | async"
                 [flight]="flight"
                 [selected]="selectedFlightIds[flight.id]"
                 (selectedChange)="selectFlight($event)"

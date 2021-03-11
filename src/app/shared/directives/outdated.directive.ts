@@ -25,7 +25,7 @@ export class OutdatedDirective {
   }
 
   constructor(private elementRef:ElementRef) {
-    console.log('CTOR OutdatedDirective');
+    // console.log('CTOR OutdatedDirective');
   }
 
 }
