@@ -12,7 +12,7 @@
 
       <div class="col-md-12">
 
-        <div class="card mb-4" *ngIf="ls.selectedGive">
+        <div class="card mb-4" *ngIf="selectedGive()">
           <div class="card-body">
             <h3 class="card-title">Basket</h3>
 
@@ -44,7 +44,7 @@
 
 
             <div class="form-group row">
-              <label for="from" class="col-2 col-form-label">From: {{ls.from}}</label>
+              <label for="from" class="col-2 col-form-label">From: {{from}}</label>
               <div class="col-10">
                 <input id="from"
                        class="form-control"
@@ -63,8 +63,7 @@
               </div>
             </div>
 
-            <button type="button" class="btn btn-outline-secondary"
-            (click)="searchFlights(from, to)">
+            <button type="button" class="btn btn-outline-secondary">
               Search
             </button>
           </div>
@@ -95,7 +94,7 @@
                 [date]="flight.date"
                 *ngFor="let flight of flights$ | async"
                 [flight]="flight"
-                [selected]="isFlightSelect(flight.id)"
+                [selected]="!!selectedFlightIds[flight.id]"
                 (selectedChange)="selectFlight($event)"
               >
 
