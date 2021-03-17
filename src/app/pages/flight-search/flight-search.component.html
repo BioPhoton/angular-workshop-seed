@@ -71,7 +71,9 @@
 
         <div class="card mb-4">
           <div class="card-body">
-            <h3 class="card-title">Upcoming Flights</h3>
+            <h3 class="card-title">
+              Upcoming Flights ( {{ resultCount$ | async }} )
+            </h3>
             <div class="dropdown card-title-btn-container">
               <button class="btn btn-sm btn-subtle" type="button">
                 <em class="fa fa-list-ul"></em> View All

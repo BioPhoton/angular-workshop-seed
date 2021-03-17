@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BehaviorSubject, combineLatest, merge, Observable, Subject } from 'rxjs';
-import { delay, exhaustMap, switchMap } from 'rxjs/operators';
+import { delay, exhaustMap, map, switchMap } from 'rxjs/operators';
 import { Flight } from '../../core/api/models/flight';
 import { FlightResource } from '../../core/api/resources/flight.resource';
 import { GlobalFlightStateService } from '../../shared/state/global-flight-state.service';
@@ -43,21 +43,32 @@ export class FlightSearchComponent {
 
   readonly refresh$ = new Subject();
 
-  flights$: Observable<Flight[]> = this.flightState.flights$;
+  flights$: Observable<Flight[]> = combineLatest([
+    this.from$,
+    this.to$,
+    this.flightState.flights$
+  ]).pipe(map(([from, to, flights]) => {
+    let filteredFlights = flights;
+    if (from) {
+      filteredFlights = filteredFlights.filter(f => f.from.toLowerCase().indexOf(from.toLowerCase()) !== -1)
+    }
+    if (to) {
+      filteredFlights = filteredFlights.filter(f => f.to.toLowerCase().indexOf(to.toLowerCase()) !== -1)
+    }
+    return filteredFlights;
+  }));
+
+  resultCount$: Observable<number> = this.flights$.pipe(
+    map(flights => flights.length)
+  );
 
   loading$ = this.flightState.loading$;
 
   constructor(
     public flightState: GlobalFlightStateService
   ) {
-    combineLatest([
-      this.from$,
-      this.to$
-    ]).subscribe(([from, to]) => {
-      this.flightState.load(from, to);
-    });
     this.refresh$.subscribe(() => {
-      this.flightState.refresh(this.from, this.to)
+      this.flightState.load();
     });
   }
 

@@ -31,8 +31,7 @@ export interface GlobalState {
 export class GlobalFlightStateService {
 
   // actions
-  private load$ = new Subject<{from: string, to: string}>();
-  private refresh$ = new Subject<{from: string, to: string}>();
+  private load$ = new Subject<void>();
 
   private _state = new BehaviorSubject<GlobalState>({
     flights: [],
@@ -51,19 +50,9 @@ export class GlobalFlightStateService {
   constructor(private fr: FlightResource) {
     // load and search flights
     this.load$.pipe(
-      switchMap(({from, to}) => {
-        return this.fr.find(from, to).pipe(
-          delay(2500),
-          map(flights => ({ flights, loading: false })),
-          startWith({ loading: true })
-        )
-      })
-    )
-      .subscribe(this._reducerFn);
-    // refresh flights
-    this.refresh$.pipe(
-      exhaustMap(({from, to}) => {
-        return this.fr.find(from, to).pipe(
+      startWith(null),
+      exhaustMap(() => {
+        return this.fr.find('', '').pipe(
           delay(2500),
           map(flights => ({ flights, loading: false })),
           startWith({ loading: true })
@@ -73,12 +62,8 @@ export class GlobalFlightStateService {
       .subscribe(this._reducerFn);
   }
 
-  refresh(from: string, to: string): void {
-    this.refresh$.next({from, to});
-  }
-
-  load(from: string, to: string): void {
-    this.load$.next({from, to});
+  load(): void {
+    this.load$.next();
   }
 
   // reducer logic: transition from state1 => state2
