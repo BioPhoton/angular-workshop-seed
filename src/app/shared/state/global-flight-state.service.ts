@@ -2,12 +2,12 @@ import {Injectable} from "@angular/core";
 import {FlightResource} from "../../core/api/resources/flight.resource";
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import {Flight} from "../../core/api/models/flight";
-import {exhaustMap, map, switchMap} from "rxjs/operators";
+import { delay, exhaustMap, map, startWith, switchMap } from 'rxjs/operators';
 
 // Global
 export interface GlobalState {
   flights: Flight[];
-  // selectedFlight: Flight | null;
+  loading: boolean;
 }
 
 
@@ -36,7 +36,7 @@ export class GlobalFlightStateService {
 
   private _state = new BehaviorSubject<GlobalState>({
     flights: [],
-    // selectedFlight: null
+    loading: false
   });
 
   // select state / derive state
@@ -44,17 +44,33 @@ export class GlobalFlightStateService {
     map(state => state.flights)
   );
 
+  loading$: Observable<boolean> = this._state.pipe(
+    map(state => state.loading)
+  );
+
   constructor(private fr: FlightResource) {
     // load and search flights
     this.load$.pipe(
-      switchMap(({from, to}) => this.fr.find(from, to))
+      switchMap(({from, to}) => {
+        return this.fr.find(from, to).pipe(
+          delay(2500),
+          map(flights => ({ flights, loading: false })),
+          startWith({ loading: true })
+        )
+      })
     )
-      .subscribe(flights => this._reducerFn({ flights }));
+      .subscribe(this._reducerFn);
     // refresh flights
     this.refresh$.pipe(
-      exhaustMap(({from, to}) => this.fr.find(from, to))
+      exhaustMap(({from, to}) => {
+        return this.fr.find(from, to).pipe(
+          delay(2500),
+          map(flights => ({ flights, loading: false })),
+          startWith({ loading: true })
+        )
+      })
     )
-      .subscribe(flights => this._reducerFn({ flights }));
+      .subscribe(this._reducerFn);
   }
 
   refresh(from: string, to: string): void {

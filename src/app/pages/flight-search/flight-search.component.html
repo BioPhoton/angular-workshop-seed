@@ -86,7 +86,9 @@
                 <em class="fa fa-refresh"></em>
               </button>
             </div>
-
+            <div class="row" *ngIf="loading$ | async">
+              <i class="fa fa-spinner fa-spin"></i>
+            </div>
             <div class="row">
               <app-flight-tile
                 class="col col-3"

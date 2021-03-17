@@ -45,6 +45,8 @@ export class FlightSearchComponent {
 
   flights$: Observable<Flight[]> = this.flightState.flights$;
 
+  loading$ = this.flightState.loading$;
+
   constructor(
     public flightState: GlobalFlightStateService
   ) {
