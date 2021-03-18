@@ -43,11 +43,10 @@ export const PLANE_SERVICE = new InjectionToken<IPlaneService>('plane-service');
     <div class="row">
       <div class="col-10">
 
-        <button class="btn rounded btn-primary m-2"
-                (click)="selectPlane(plane)"
-                *ngFor="let plane of planes$ | async">
-          {{ plane.name }}
-        </button>
+        <app-airplane
+          [plane]="plane"
+          (selected)="selectPlane($event)"
+          *ngFor="let plane of planes$ | async"></app-airplane>
 
       </div>
       <div class="col-2">
