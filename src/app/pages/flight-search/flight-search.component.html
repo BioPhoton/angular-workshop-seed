@@ -22,7 +22,7 @@
             <ul class="todo-list mt-2" >
               <li class="todo-list-item">
                 Flights:
-                <pre>{{selectedFlightIds | json}}</pre>
+                <pre>{{selectedFlightIds$ | async | json}}</pre>
               </li>
             </ul>
 
@@ -44,21 +44,23 @@
 
 
             <div class="form-group row">
-              <label for="from" class="col-2 col-form-label">From: {{from}}</label>
+              <label for="from" class="col-2 col-form-label">From: {{from$ | async}}</label>
               <div class="col-10">
                 <input id="from"
                        class="form-control"
                        type="text"
-                       [(ngModel)]="from"
+                       [ngModel]="from$ | async"
+                       (ngModelChange)="state.set({from: $event})"
                 >
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="to" class="col-2 col-form-label">To: {{to}}</label>
+              <label for="to" class="col-2 col-form-label">To: {{to$ | async}}</label>
               <div class="col-10">
                 <input id="to" class="form-control" type="text"
-                       [(ngModel)]="to"
+                       [ngModel]="to$ | async"
+                       (ngModelChange)="state.set({to: $event})"
                 >
               </div>
             </div>
@@ -96,12 +98,11 @@
                 class="col col-3"
                 appOutdated
                 [date]="flight.date"
-                *ngFor="let flight of flights$ | async"
+                *ngFor="let flight of filteredFlights$ | async"
                 [flight]="flight"
-                [selected]="!!selectedFlightIds[flight.id]"
+                [selected]="(selectedFlightIds$ | async)[flight.id]"
                 (selectedChange)="selectFlight($event)"
               >
-
               </app-flight-tile>
               <!--
               <table class="table table-striped">

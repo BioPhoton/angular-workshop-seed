@@ -1,83 +1,90 @@
-import { Component } from '@angular/core';
-import { BehaviorSubject, combineLatest, merge, Observable, Subject } from 'rxjs';
-import { delay, exhaustMap, map, switchMap } from 'rxjs/operators';
-import { Flight } from '../../core/api/models/flight';
-import { FlightResource } from '../../core/api/resources/flight.resource';
-import { GlobalFlightStateService } from '../../shared/state/global-flight-state.service';
+import {Component} from '@angular/core';
+import {Observable, Subject} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {Flight} from '../../core/api/models/flight';
+import {GlobalFlightStateService} from '../../shared/state/global-flight-state.service';
+import {RxState} from "@rx-angular/state";
+
+/*
+* Global
+- flights
+- loading
+
+* Local
+
+// SQL: Table vs Query
+// Component: Model vs ViewModel
+
+// Class vs Template
+** Model
+- from
+- to
+- selectedFlights
+- flights
+- loading
+
+** ViewModel
+- flightsCount (derived from flights)
+*/
+
+interface FlightSearchState {
+  flights: Flight[],
+  loading: boolean,
+  from: string,
+  to: string,
+  selectedFlights: {[id:string]: boolean}
+}
 
 @Component({
   selector: 'app-flight-search',
-  templateUrl: './flight-search.component.html'
+  templateUrl: './flight-search.component.html',
+  providers: [RxState]
 })
-export class FlightSearchComponent {
-
-  private fromTo$ = new BehaviorSubject<{
-    from: string;
-    to: string;
-  }>({
-    from: '',
-    to: ''
-  });
-
-
-  private from$ = new BehaviorSubject('');
-
-  get from(): string {
-    return this.from$.getValue();
-  }
-  set from(from: string) {
-    this.from$.next(from);
-  }
-
-  private to$ = new BehaviorSubject('');
-
-  get to(): string {
-    return this.to$.getValue();
-  }
-  set to(to: string) {
-    this.to$.next(to);
-  }
-
-  selectedFlightIds: { [id: string]: boolean } = {};
-  flights: Flight[] = [];
-
+export class FlightSearchComponent  {
+  readonly from$ = this.state.select('from');
+  readonly to$ = this.state.select('to');
+  readonly selectedFlightIds$ = this.state.select('selectedFlights');
+  readonly resultCount$ = this.state.select(map(({flights}) => flights.length));
   readonly refresh$ = new Subject();
-
-  flights$: Observable<Flight[]> = combineLatest([
-    this.from$,
-    this.to$,
-    this.flightState.flights$
-  ]).pipe(map(([from, to, flights]) => {
-    let filteredFlights = flights;
-    if (from) {
-      filteredFlights = filteredFlights.filter(f => f.from.toLowerCase().indexOf(from.toLowerCase()) !== -1)
-    }
-    if (to) {
-      filteredFlights = filteredFlights.filter(f => f.to.toLowerCase().indexOf(to.toLowerCase()) !== -1)
-    }
-    return filteredFlights;
-  }));
-
-  resultCount$: Observable<number> = this.flights$.pipe(
-    map(flights => flights.length)
-  );
-
-  loading$ = this.flightState.loading$;
+  readonly loading$ = this.flightState.loading$;
+  readonly filteredFlights$: Observable<Flight[]> = this.state.select(
+    map(({from, to, flights}) => {
+      let filteredFlights = flights;
+      if (from) {
+        filteredFlights = filteredFlights.filter(f => f.from.toLowerCase().indexOf(from.toLowerCase()) !== -1)
+      }
+      if (to) {
+        filteredFlights = filteredFlights.filter(f => f.to.toLowerCase().indexOf(to.toLowerCase()) !== -1)
+      }
+      return filteredFlights;
+    }));
 
   constructor(
-    public flightState: GlobalFlightStateService
+    public flightState: GlobalFlightStateService,
+    public state: RxState<FlightSearchState>
   ) {
-    this.refresh$.subscribe(() => {
-      this.flightState.load();
+    this.state.set({
+      from: '',
+      to: '',
+      selectedFlights: {}
     });
+    this.state.connect('flights', this.flightState.flights$)
+    this.state.connect('loading', this.flightState.loading$)
+
+    this.state.hold(this.refresh$, () => this.flightState.load());
   }
 
   selectedGive(): number {
-    return Object.keys(this.selectedFlightIds).length;
+    return Object.keys(this.state.get().selectedFlights).length;
   }
 
   selectFlight(id: string) {
-    this.selectedFlightIds[id] = !this.selectedFlightIds[id];
+    this.state.set((oldState) => ({
+      selectedFlights: {
+        ...oldState.selectedFlights,
+        [id]: !oldState.selectedFlights[id]
+      }
+    }))
   }
 
 }
