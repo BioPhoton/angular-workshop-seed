@@ -1,9 +1,9 @@
 import {Component, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {FlightResource} from "../../../core/api/resources/flight.resource";
+import {FlightResource} from "../../core/api/resources/flight.resource";
 import {map, switchMap} from "rxjs/operators";
 import {FormBuilder, Validators} from "@angular/forms";
-import {emailBlacklisted, isDifferent, validPlanet} from "../../../shared/validators/custom.validator";
+import {emailBlacklisted, isDifferent, validPlanet} from "../../shared/validators/custom.validator";
 
 @Component({
   selector: 'app-flight-edit',
@@ -20,9 +20,10 @@ import {emailBlacklisted, isDifferent, validPlanet} from "../../../shared/valida
 
       <label for="date">Date</label>
       <input type="text" id="date" name="date" formControlName="date">
+      <h3>Plane Selector:</h3>
+      <app-plane-selector></app-plane-selector>
     </form>
   `,
-  styleUrls: ['./flight-edit.component.scss']
 })
 export class FlightEditComponent implements OnDestroy {
 

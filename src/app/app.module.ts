@@ -9,7 +9,6 @@ import {SharedModule} from './shared/shared.module';
 import {FlightTileComponent} from './pages/flight-search/flight-tile/flight-tile.component';
 import {RouterModule} from "@angular/router";
 import {Error404Component} from './pages/error404/error404.component';
-import {FlightEditComponent} from './pages/flight-search/flight-edit/flight-edit.component';
 import {FlightComponent} from './pages/flight/flight.component';
 import {PassengerComponent} from './pages/flight/passenger/passenger.component';
 
@@ -23,7 +22,6 @@ import {PassengerComponent} from './pages/flight/passenger/passenger.component';
     FlightSearchComponent,
     FlightTileComponent,
     Error404Component,
-    FlightEditComponent,
     FlightComponent,
     PassengerComponent
   ],
@@ -67,9 +65,9 @@ import {PassengerComponent} from './pages/flight/passenger/passenger.component';
             component: PassengerComponent
           },
           {
-            path: 'edit/:id',
-            component: FlightEditComponent
-          }
+            path: 'edit',
+            loadChildren: () => import('./pages/flight-edit/flight-edit.module').then(m => m.FlightEditModule)
+          },
         ]
       },
       {
