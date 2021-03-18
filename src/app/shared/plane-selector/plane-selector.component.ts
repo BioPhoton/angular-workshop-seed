@@ -1,4 +1,4 @@
-import { Component, Inject, InjectionToken } from '@angular/core';
+import { Component, Inject, InjectionToken, Optional } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface Plane {
@@ -7,6 +7,32 @@ export interface Plane {
 
 export interface IPlaneService {
   planes$: Observable<Plane[]>
+}
+
+export function defaultPlanes(): Plane[] {
+  return [
+    {
+      name: 'boeing 747'
+    },
+    {
+      name: 'Airco DH.16'
+    },
+    {
+      name: 'Airbus A321'
+    },
+    {
+      name: 'Airbus A380'
+    },
+    {
+      name: 'Beriev Be-200'
+    }
+  ];
+}
+
+export function specialPlanes(): Plane[] {
+  return defaultPlanes().map(plane => ({
+    name: `SPECIAL_✈️_${plane.name}`
+  }))
 }
 
 export const PLANE_SERVICE = new InjectionToken<IPlaneService>('plane-service');
@@ -45,8 +71,12 @@ export class PlaneSelectorComponent {
   selectedPlane: Plane | null;
 
   constructor(
-    @Inject(PLANE_SERVICE) private planeService: IPlaneService
-  ) {}
+    @Optional() @Inject(PLANE_SERVICE) private planeService: IPlaneService
+  ) {
+    if (!planeService) {
+      throw new Error('app-plane-selector needs PLANE_SERVICE. please provide one');
+    }
+  }
 
   selectPlane(plane: Plane): void {
     this.selectedPlane = this.selectedPlane === plane ? null : plane;
