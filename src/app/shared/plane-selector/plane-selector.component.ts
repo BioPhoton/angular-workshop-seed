@@ -70,11 +70,8 @@ export class PlaneSelectorComponent {
   selectedPlane: Plane | null;
 
   constructor(
-    @Optional() @Inject(PLANE_SERVICE) private planeService: IPlaneService
+    @Inject(PLANE_SERVICE) private planeService: IPlaneService
   ) {
-    if (!planeService) {
-      throw new Error('app-plane-selector needs PLANE_SERVICE. please provide one');
-    }
   }
 
   selectPlane(plane: Plane): void {
