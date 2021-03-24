@@ -1,5 +1,17 @@
-import { Component, Inject, InjectionToken, Optional } from '@angular/core';
-import { Observable } from 'rxjs';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  Component,
+  ContentChildren, Directive,
+  Inject,
+  InjectionToken,
+  Optional,
+  QueryList,
+  ViewChildren
+} from '@angular/core';
+import { merge, Observable } from 'rxjs';
+import { startWith, switchMap } from 'rxjs/operators';
+import { AirplaneComponent } from './airplane.component';
 
 export interface Plane {
   name: string;
@@ -37,17 +49,18 @@ export function specialPlanes(): Plane[] {
 
 export const PLANE_SERVICE = new InjectionToken<IPlaneService>('plane-service');
 
+@Directive()
+// tslint:disable-next-line:directive-class-suffix
+export abstract class AbstractPlane {
+  selected: Observable<Plane>;
+}
+
 @Component({
   selector: 'app-plane-selector',
   template: `
     <div class="row">
       <div class="col-10">
-
-        <app-airplane
-          [plane]="plane"
-          (selected)="selectPlane($event)"
-          *ngFor="let plane of planes$ | async"></app-airplane>
-
+        <ng-content></ng-content>
       </div>
       <div class="col-2">
 
@@ -63,15 +76,24 @@ export const PLANE_SERVICE = new InjectionToken<IPlaneService>('plane-service');
   `,
   styles: [``]
 })
-export class PlaneSelectorComponent {
+export class PlaneSelectorComponent implements AfterContentInit {
 
   readonly planes$: Observable<Plane[]> = this.planeService.planes$;
 
   selectedPlane: Plane | null;
 
+  @ContentChildren(AbstractPlane) airplanes: QueryList<AbstractPlane>;
+
   constructor(
     @Inject(PLANE_SERVICE) private planeService: IPlaneService
   ) {
+  }
+
+  ngAfterContentInit() {
+    this.airplanes.changes.pipe(
+      startWith(this.airplanes),
+      switchMap(() => merge(...this.airplanes.map(airplane => airplane.selected)))
+    ).subscribe((selected: Plane) => this.selectPlane(selected))
   }
 
   selectPlane(plane: Plane): void {

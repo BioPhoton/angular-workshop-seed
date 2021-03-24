@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Plane } from './plane-selector.component';
+import { AbstractPlane, Plane } from './plane-selector.component';
 
 @Component({
   selector: 'app-airplane',
@@ -9,9 +9,15 @@ import { Plane } from './plane-selector.component';
       {{ plane.name }}
     </button>
   `,
-  styles: []
+  styles: [],
+  providers: [
+    {
+      provide: AbstractPlane,
+      useExisting: AirplaneComponent
+    }
+  ]
 })
-export class AirplaneComponent {
+export class AirplaneComponent implements AbstractPlane {
 
   @Input() plane: Plane;
   @Output() selected = new EventEmitter<Plane>();

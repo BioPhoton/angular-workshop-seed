@@ -5,12 +5,14 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {CoreModule} from './core/core.module';
 import {FlightSearchComponent} from './pages/flight-search/flight-search.component';
+import { PLANE_SERVICE } from './shared/plane-selector/plane-selector.component';
 import {SharedModule} from './shared/shared.module';
 import {FlightTileComponent} from './pages/flight-search/flight-tile/flight-tile.component';
 import {RouterModule} from "@angular/router";
 import {Error404Component} from './pages/error404/error404.component';
 import {FlightComponent} from './pages/flight/flight.component';
 import {PassengerComponent} from './pages/flight/passenger/passenger.component';
+import { GlobalFlightStateService } from './shared/state/global-flight-state.service';
 
 
 @NgModule({
@@ -82,6 +84,10 @@ import {PassengerComponent} from './pages/flight/passenger/passenger.component';
   ],
   providers: [
     // Services
+    {
+      provide: PLANE_SERVICE,
+      useExisting: GlobalFlightStateService
+    }
   ],
   bootstrap: [AppComponent]
 })

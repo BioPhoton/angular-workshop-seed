@@ -3,6 +3,7 @@ import {FlightResource} from "../../core/api/resources/flight.resource";
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import {Flight} from "../../core/api/models/flight";
 import { delay, exhaustMap, map, startWith, switchMap } from 'rxjs/operators';
+import { defaultPlanes, IPlaneService, Plane } from '../plane-selector/plane-selector.component';
 
 // Global
 export interface GlobalState {
@@ -28,7 +29,9 @@ export interface GlobalState {
 @Injectable({
   providedIn: "root"
 })
-export class GlobalFlightStateService {
+export class GlobalFlightStateService implements IPlaneService {
+
+  planes$ = new BehaviorSubject<Plane[]>(defaultPlanes());
 
   // actions
   private load$ = new Subject<void>();
