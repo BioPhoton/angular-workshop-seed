@@ -9,6 +9,7 @@ import {HomeComponent} from './pages/home/home.component';
 import {SharedModule} from './shared/shared.module';
 import {RouterModule} from "@angular/router";
 import {ROUTES} from "./routes";
+import { EditComponent } from './pages/edit/edit.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {ROUTES} from "./routes";
     // Pipes
     AppComponent,
     HomeComponent,
-    FlightSearchComponent
+    FlightSearchComponent,
+    EditComponent
   ],
   exports: [
     // Modules
@@ -27,7 +29,7 @@ import {ROUTES} from "./routes";
   ],
   imports: [
     // Modules
-    RouterModule.forRoot(ROUTES),
+    RouterModule.forRoot(ROUTES, { useHash: true }),
     BrowserModule,
     CoreModule,
     SharedModule,

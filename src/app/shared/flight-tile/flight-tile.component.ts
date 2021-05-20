@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Flight} from "../../core/api/models/flight";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-flight-tile',
@@ -10,6 +11,7 @@ import {Flight} from "../../core/api/models/flight";
   <button
     (click)="selectChange.emit(flight.id)"
   >{{selected ? 'Deselect': 'Select'}}</button>
+  <button (click)="navigateToEdit()">edit</button>
   `
 })
 export class FlightTileComponent {
@@ -22,5 +24,13 @@ export class FlightTileComponent {
 
   @Output()
   selectChange = new EventEmitter<string>()
+
+  constructor(private router: Router) {
+
+  }
+
+  navigateToEdit() {
+    this.router.navigate(['flights',this.flight.id,'edit']);
+  }
 
 }
