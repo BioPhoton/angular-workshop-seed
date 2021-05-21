@@ -11,6 +11,7 @@ export class FlightSearchComponent {
 
   // global
   flights$ = this.fsf.flights$;
+  loading$ = this.fsf.loading$;
 
   // local
   selectedFlightIds: { [key: string]: boolean } = {};

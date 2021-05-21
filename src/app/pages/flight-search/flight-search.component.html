@@ -85,6 +85,9 @@
             </div>
 
             <div class="row">
+
+              <div *ngIf="loading$ | async">LOADING...</div>
+
               <div class="col-3" *ngFor="let flight of flights$ | async">
                 <app-flight-tile
                   [appHighlight]="flight"
