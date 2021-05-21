@@ -46,11 +46,9 @@ export class FlightSearchFacade implements OnDestroy {
     .pipe(map(selectLoading));
 
   // Effect
-  private readonly searchEffect: () => Observable<Partial<FlightState>> = (params: {from: string, to: string}): Observable<Partial<FlightState>> =>
-      this.fr.find(params.from, params.to)
+  private readonly searchEffect = (p: {from: string, to: string}) => this.fr.find(p.from, p.to)
     .pipe(
-      // map to partial state for reducer
-      map(flights => ({flights: flights})),
+      map(flights => ({flights})),
       // start loading
       startWith({loading:true}),
       // error handling
@@ -59,16 +57,14 @@ export class FlightSearchFacade implements OnDestroy {
       endWith({loading:false})
     );
 
-  // Trigger as subject => handle async logic
+  // Trigger
   private readonly searchTrigger = new Subject<{from: string, to: string}>();
 
   constructor(private fr: FlightResource) {
     this.subscription.add(
       this.searchTrigger
       .pipe(
-        // listen to trigger and run effect. forward result
         switchMap(p => this.searchEffect(p)),
-        // update state
         tap((slice: Partial<FlightState>) => this._state.next(reduceFlights(this._state.getValue(), slice)))
       )
       .subscribe()
@@ -78,11 +74,9 @@ export class FlightSearchFacade implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // teardown logic
-     this.subscription.unsubscribe();
-  }
+       this.subscription.unsubscribe();
+    }
 
-    // bridge from imperative to reactive
   searchFlights(from: string, to: string): void {
     this.searchTrigger.next({from, to})
   }

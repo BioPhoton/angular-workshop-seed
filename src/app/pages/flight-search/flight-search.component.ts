@@ -1,13 +1,15 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {Flight} from '../../core/api/models/flight';
 import {FlightResource} from '../../core/api/resources/flight.resource';
 import {FlightSearchFacade} from "./flight-search.facade";
+import {FlightFacade} from "./flight.facade";
 
 @Component({
   selector: 'app-flight-search',
-  templateUrl: './flight-search.component.html'
+  templateUrl: './flight-search.component.html',
+
 })
-export class FlightSearchComponent {
+export class FlightSearchComponent implements OnDestroy {
 
   // global
   flights$ = this.fsf.flights$;
@@ -19,10 +21,14 @@ export class FlightSearchComponent {
   to: string
 
   constructor(
-    private fsf: FlightSearchFacade
+    private fsf: FlightFacade
   ) {
 
   }
+
+  ngOnDestroy(): void {
+        console.log("search destroy");
+    }
 
   searchFlights(from: string, to: string): void {
     this.fsf.searchFlights(from, to);

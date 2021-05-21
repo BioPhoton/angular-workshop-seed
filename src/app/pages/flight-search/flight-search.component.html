@@ -90,7 +90,6 @@
 
               <div class="col-3" *ngFor="let flight of flights$ | async">
                 <app-flight-tile
-                  [appHighlight]="flight"
                   [flight]="flight"
                   [selected]="selectedFlightIds[flight.id]"
                  (selectChange)="toggleFlight($event)"
