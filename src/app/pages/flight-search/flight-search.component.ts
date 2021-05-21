@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Flight} from '../../core/api/models/flight';
 import {FlightResource} from '../../core/api/resources/flight.resource';
+import {FlightSearchFacade} from "./flight-search.facade";
 
 @Component({
   selector: 'app-flight-search',
@@ -8,24 +9,24 @@ import {FlightResource} from '../../core/api/resources/flight.resource';
 })
 export class FlightSearchComponent {
 
-  public selectedFlightIds: { [key: string]: boolean } = {};
-  public flights: Flight[] = [];
+  // global
+  flights$ = this.fsf.flights$;
 
+  // local
+  selectedFlightIds: { [key: string]: boolean } = {};
   from: string;
   to: string
 
-  constructor(private fr: FlightResource) {
-    this.searchFlights('', '');
+  constructor(
+    private fsf: FlightSearchFacade
+  ) {
+
   }
 
   searchFlights(from: string, to: string): void {
-    this.fr.find(from, to)
-      .subscribe(
-        newFlights => {
-          this.flights = newFlights;
-        }
-      );
+    this.fsf.searchFlights(from, to);
   }
+
   toggleFlight(id: string): void {
     this.selectedFlightIds[id] = !this.selectedFlightIds[id];
   }

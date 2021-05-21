@@ -85,7 +85,7 @@
             </div>
 
             <div class="row">
-              <div class="col-3" *ngFor="let flight of flights">
+              <div class="col-3" *ngFor="let flight of flights$ | async">
                 <app-flight-tile
                   [appHighlight]="flight"
                   [flight]="flight"

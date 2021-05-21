@@ -1,20 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewChecked, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
+import {FlightResource} from "../../core/api/resources/flight.resource";
+import {combineLatest, of, Subscription} from "rxjs";
+import {map, switchMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-edit',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss']
+  template: ``
 })
-export class EditComponent implements OnInit {
+export class EditComponent {
 
-  constructor(private route: ActivatedRoute) {
-    this.route.params.subscribe((params) => {
-      console.log('params.id: ', params.id)
-    });
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private fr: FlightResource
+  ) {
 
-  ngOnInit(): void {
   }
 
 }
