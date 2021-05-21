@@ -27,7 +27,7 @@ export class FlightSearchFacade implements OnDestroy {
   // State
   subscription = new Subscription();
 
-  // Internat storage
+  // Internal storage
   private readonly _state = new BehaviorSubject<FlightSearchState>({
     flights:[], loading:false
   });
@@ -39,25 +39,22 @@ export class FlightSearchFacade implements OnDestroy {
     .pipe(map(selectLoading));
 
   // Effect
-  private readonly searchEffect = ({from, to}: {from: string, to: string}) => this.fr.find(from, to);
+  private readonly searchEffect = (p: {from: string, to: string}) => this.fr.find(p.from, p.to)
+    .pipe(
+      map(flights => ({flights})),
+      startWith({loading:true}),
+      catchError(e => of({loading:false})),
+      endWith({loading:false})
+    );
 
   // Trigger
   private readonly searchTrigger = new Subject<{from: string, to: string}>();
-
 
   constructor(private fr: FlightResource) {
     this.subscription.add(
       this.searchTrigger
       .pipe(
-        switchMap(
-          p => this.searchEffect(p)
-          .pipe(
-            map(flights => ({flights})),
-            startWith({loading:true}),
-            catchError(e => of({loading:false})),
-            endWith({loading:false})
-          )
-        ),
+        switchMap(p => this.searchEffect(p)),
         tap((slice: Partial<FlightSearchState>) => this._state.next(reduceFlights(this._state.getValue(), slice)))
       )
       .subscribe()
